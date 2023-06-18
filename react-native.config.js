@@ -1,7 +1,3 @@
 module.exports = {
-  project: {
-    ios: {
-      sourceDir: './ios/Podfile',
-    },
-  },
+  assets: ["./assets/fonts/"],
 };
