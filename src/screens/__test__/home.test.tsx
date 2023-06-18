@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 import { ThemeProvider } from "styled-components/native"; // precisa ser native pra wraper funcionar 
 import themes from "@/themes/theme";
 
+
 function wrapper({ children }: { children: ReactNode }) {
   return <ThemeProvider theme={themes}>
     {children}

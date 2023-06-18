@@ -15,7 +15,7 @@ export const viewItem = styled.View`
 
 export const textItem = styled.Text`
    margin-top: 15px;
-   font-family: ${({ theme }) => theme.fonts.regular};
+   font-family: ${({ theme }) => theme.fonts.medium};
    color: ${({ theme }) => theme.color.grayLight};
-   font-size: 18px;
+   font-size: 21px;
 `
