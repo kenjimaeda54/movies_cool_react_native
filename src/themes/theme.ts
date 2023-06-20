@@ -5,7 +5,8 @@ export default {
     blueDark: "#2B4C7E",
     blueLight: "#567EBB",
     grayDark: "#606d80",
-    grayLight: "#dce0e6"
+    grayLight: "#dce0e6",
+    yellow: "#ffff00"
   },
   fonts: {
     regular: "Nunito-Regular",

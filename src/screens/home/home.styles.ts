@@ -1,6 +1,6 @@
 import { Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { styled } from "styled-components/native";
+import styled from "styled-components/native";
 
 const { width } = Dimensions.get('window')
 
@@ -12,6 +12,11 @@ export const container = styled(SafeAreaView)`
 
 `
 
+export const wrapperList = styled.View`
+  
+
+`
+
 export const imgTop = styled.Image`
   height: 320px;
   border-radius: 20px;
@@ -20,5 +25,14 @@ export const imgTop = styled.Image`
 
 export const body = styled.View`
   padding: 20px 25px;
+
+`
+
+export const titleSection = styled.Text` 
+  font-size: 22px;
+  font-family: ${({ theme }) => theme.fonts.bold};
+  line-height: 27px;
+  color:  ${({ theme }) => theme.color.grayLight};
+  margin-bottom: 20px;
 
 `

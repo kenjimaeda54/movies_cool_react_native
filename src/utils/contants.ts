@@ -5,4 +5,5 @@ export class Contants {
   static testIdImageTopHomeScreen = "testId image top homeScreen"
   static testIdImageSeriesPopular = "testId series popular"
   static testIdSeriesItem = "test Id series Item"
+  static testIdContainerRatings = 'teste id container ratings'
 }

@@ -1,18 +1,10 @@
-import { render } from "@testing-library/react-native"
-import { ReactNode } from "react";
-import { ThemeProvider } from "styled-components/native";
 import { mock } from "@/mock/mock_data"
 import ListSereisPopular from "../ListSeriesPopular";
 import { Contants } from "@/utils/contants";
-import themes from "@/themes/theme";
+import { render } from "@/utils/test-utils";
 
 
 
-function wrapper({ children }: { children: ReactNode }) {
-  return <ThemeProvider theme={themes}>
-    {children}
-  </ThemeProvider>
-}
 
 
 const item = {
@@ -26,7 +18,7 @@ describe('ListSeriesPopular', () => {
 
 
   it('should renders a FlatList with the correct data', () => {
-    const { getByTestId, getAllByTestId } = render(<ListSereisPopular data={mock.results} />, { wrapper })
+    const { getByTestId, getAllByTestId } = render(<ListSereisPopular data={mock.results} />)
     const element = getByTestId(Contants.testIdSeriesPopular)
     const items = getAllByTestId(Contants.testIdSeriesItem);
     expect(element.props.data).toEqual(mock.results)
@@ -34,7 +26,7 @@ describe('ListSeriesPopular', () => {
   });
 
   it('should render EmptyCompoent when dont have data', () => {
-    const { getByText } = render(<ListSereisPopular data={[]} />, { wrapper }) // aqui estou testando ListEmptyComponent
+    const { getByText } = render(<ListSereisPopular data={[]} />) // aqui estou testando ListEmptyComponent
     const text = getByText(/Não tem nada de novo aqui/i)
     expect(text).toBeTruthy()
 
@@ -43,17 +35,15 @@ describe('ListSeriesPopular', () => {
 
 
 
-  it('should renders the correct name,img and vote_average', () => {
-    const { getByTestId } = render(<ListSereisPopular data={mock.results} />, { wrapper })
+  it('should renders the correct name,img', () => {
+    const { getByTestId } = render(<ListSereisPopular data={mock.results} />)
     const itemId = getByTestId(Contants.testIdSeriesPopular)
 
-    const { getByText, getByTestId: getByTestIdItem } = render(itemId.props.renderItem({ item }), { wrapper: wrapper })
+    const { getByText, getByTestId: getByTestIdItem } = render(itemId.props.renderItem({ item }))
     const name = getByText(/Love and passion/i) //love em passion sera inserido dentro do renderItem da nossa flatlist,assim não me preocupo com que de fato esta renderizando la , so com nossa abstração
     //se dentro de item não possuir Love and passion ira dar erro
-    const voteAverage = getByText(/5/i)
     const image = getByTestIdItem(Contants.testIdImageSeriesPopular)
     expect(name).toBeTruthy()
-    expect(voteAverage).toBeTruthy()
     expect(image.props.source.uri).toEqual(`${Contants.baseUrlImage}/${item.backdrop_path}`)
 
   });

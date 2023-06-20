@@ -19,7 +19,7 @@ export const mock = {
       "overview": "Voltes V: Legacy follows the story of three brothers, Steve, Big Bert, and Little Jon Armstrong, and their friends Jamie Robinson and Mark Gordon, as they fight the forces of humanoid aliens known as Boazanians who plans to invade the earth and launch their beast fighters all over the world.",
       "popularity": 3310.917,
       "poster_path": "/jZ32tdCTFsRoU2GehW6ZzSpTyS1.jpg",
-      "vote_average": 4.6,
+      "vote_average": 5,
       "vote_count": 5
     },
     {
@@ -30,7 +30,7 @@ export const mock = {
         10759
       ],
       "id": 234343,
-      "name": "Voltes V: Legacy",
+      "name": "Voltes V: Legacy Voltes V: Legacy Voltes V: Legacy",
       "origin_country": [
         "PH"
       ],
@@ -39,7 +39,7 @@ export const mock = {
       "overview": "Voltes V: Legacy follows the story of three brothers, Steve, Big Bert, and Little Jon Armstrong, and their friends Jamie Robinson and Mark Gordon, as they fight the forces of humanoid aliens known as Boazanians who plans to invade the earth and launch their beast fighters all over the world.",
       "popularity": 3310.917,
       "poster_path": "/jZ32tdCTFsRoU2GehW6ZzSpTyS1.jpg",
-      "vote_average": 4.6,
+      "vote_average": 4.3,
       "vote_count": 5
     },
     {
@@ -79,7 +79,7 @@ export const mock = {
       "overview": "Voltes V: Legacy follows the story of three brothers, Steve, Big Bert, and Little Jon Armstrong, and their friends Jamie Robinson and Mark Gordon, as they fight the forces of humanoid aliens known as Boazanians who plans to invade the earth and launch their beast fighters all over the world.",
       "popularity": 3310.917,
       "poster_path": "/jZ32tdCTFsRoU2GehW6ZzSpTyS1.jpg",
-      "vote_average": 4.6,
+      "vote_average": 2.6,
       "vote_count": 5
     },
   ]
