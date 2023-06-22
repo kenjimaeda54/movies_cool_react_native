@@ -1,17 +1,17 @@
+import { Dimensions } from "react-native";
 import styled from "styled-components/native";
 
-export const container = styled.View`
-  
-`
+const { width } = Dimensions.get("window")
+
 
 export const viewItem = styled.View`
    margin-right: 20px;
    width: 200px;
+ 
 `
 
 export const image = styled.Image`
   height: 280px;
-  width: 200px;
   border-radius: 10px;
 `
 

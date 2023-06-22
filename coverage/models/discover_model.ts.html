@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for themes/theme.ts</title>
+    <title>Code coverage report for models/discover_model.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">themes</a> theme.ts</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">models</a> discover_model.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -80,7 +80,13 @@
 <a name='L15'></a><a href='#L15'>15</a>
 <a name='L16'></a><a href='#L16'>16</a>
 <a name='L17'></a><a href='#L17'>17</a>
-<a name='L18'></a><a href='#L18'>18</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -98,23 +104,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
-export default {
-  color: {
-    black: "#23232B",
-    blueDark: "#2B4C7E",
-    blueLight: "#567EBB",
-    grayDark: "#606d80",
-    grayLight: "#dce0e6",
-    yellow: "#ffff00"
-  },
-  fonts: {
-    regular: "Nunito-Regular",
-    medium: "Nunito-Medium",
-    light: "Nunito-Light",
-    bold: "Nunito-Bold"
-  }
+export interface DiscoverModel {
+  page: number
+  results: Array&lt;DiscoverResults&gt;
+}
 &nbsp;
-} </pre></td></tr></table></pre>
+export interface DiscoverResults {
+  "backdrop_path": string,
+  "first_air_date": string,
+  "genre_ids": Array&lt;number&gt;,
+  "id": number,
+  "name": string,
+  "origin_country": Array&lt;string&gt;,
+  "original_language": string,
+  "original_name": string,
+  "overview": string,
+  "popularity": number,
+  "poster_path": string,
+  "vote_average": number,
+  "vote_count": number
+}</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->

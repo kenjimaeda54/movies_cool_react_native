@@ -1,6 +1,9 @@
 import { Contants } from "@/utils/contants";
 import HomeScreen from "../home/Home"
 import { render } from "@/utils/test-utils";
+import { mock } from "@/mock/mock_data";
+import useHomeViewModel from "@/view_models/home_view_model";
+import { act } from "react-test-renderer";
 
 
 describe('HomeScreen', () => {
@@ -21,9 +24,20 @@ describe('HomeScreen', () => {
 
   it('should have the title of the section popular series', () => {
     const { getByText } = render(<HomeScreen />)
-    const text = getByText(/Popular Series/ig)
+    const text = getByText(/Series/ig)
     expect(text).toBeTruthy()
 
   })
+
+  it('should show the number of indicators equal to the number of items section popular series', () => {
+    const { getAllByRole } = render(<HomeScreen />)
+    const id = getAllByRole('button')
+    expect(id).toHaveLength(mock.results.length)
+
+  })
+
+
+
+
 
 })

@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for components/card_apresentation_movie/ListSeriesPopular.tsx</title>
+    <title>Code coverage report for components/card_apresentation_movie/ListDiscovers.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">components/card_apresentation_movie</a> ListSeriesPopular.tsx</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">components/card_apresentation_movie</a> ListDiscovers.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -37,9 +37,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/5</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
@@ -125,7 +125,10 @@
 <a name='L60'></a><a href='#L60'>60</a>
 <a name='L61'></a><a href='#L61'>61</a>
 <a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -133,7 +136,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -144,6 +147,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -173,6 +177,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -187,17 +192,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Animated, Dimensions, FlatList, FlatListProps, Text, ViewToken } from "react-native";
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { FlatList, Text, View, } from "react-native";
 import * as Styles from "./cardPresentation.styles";
-import { SeriesModel, SeriesResults } from "@/models/series_model";
+import { DiscoverResults } from "@/models/discover_model";
 import { Contants } from "@/utils/contants";
-import useHomeViewModel from "@/view_models/home_view_model";
-import { ForwardRefRenderFunction, LegacyRef, ReactNode, RefObject, forwardRef, useRef } from "react";
+import { ForwardRefRenderFunction, forwardRef } from "react";
 import Ratings from "@/components/ratings/Ratings";
 &nbsp;
-const { width } = Dimensions.get("screen")
+&nbsp;
+&nbsp;
 interface IListSeriesPopular {
-  data: Array&lt;SeriesResults&gt;
+  data: Array&lt;DiscoverResults&gt;
   handleActiveIndex: (index: number) =&gt; void
 &nbsp;
 }
@@ -209,11 +215,12 @@ function EmptyCompoent() {
 }
 &nbsp;
 &nbsp;
-function renderItem({ item }: { item: SeriesResults }) {
+function renderItem({ item }: { item: DiscoverResults }) {
+&nbsp;
 &nbsp;
   return (
     &lt;Styles.viewItem testID={Contants.testIdSeriesItem} &gt;
-      &lt;Styles.image testID={Contants.testIdImageSeriesPopular} source={{ uri: `${Contants.baseUrlImage}/${item.backdrop_path}` }} resizeMode="stretch" resizeMethod="resize" /&gt;
+      &lt;Styles.image testID={Contants.testIdImageSeriesPopular} source={{ uri: `${Contants.baseUrlImage}/${item.backdrop_path}` }} resizeMode="stretch" /&gt;
       {/*overflow usa numberOfline*/}
       &lt;Styles.textItem numberOfLines={1}  &gt;{item.name}&lt;/Styles.textItem&gt;
       &lt;Styles.wrapIcons&gt;
@@ -223,40 +230,42 @@ function renderItem({ item }: { item: SeriesResults }) {
   )
 }
 &nbsp;
-const ListSereisPopular: ForwardRefRenderFunction&lt;FlatList&lt;SeriesResults&gt;, IListSeriesPopular&gt; = ({ data, handleActiveIndex }, ref) =&gt; {
+const ListDiscovers: ForwardRefRenderFunction&lt;FlatList&lt;DiscoverResults&gt;, IListSeriesPopular&gt; = ({ data, handleActiveIndex }, ref) =&gt; {
 &nbsp;
 &nbsp;
 &nbsp;
   return (
-    &lt;Styles.container&gt;
-      &lt;FlatList
-        ref={ref}
-        data={data}
-        showsHorizontalScrollIndicator={false}
-        ListEmptyComponent={&lt;EmptyCompoent /&gt;}
-        testID={Contants.testIdSeriesPopular}
-        style={{
-          marginRight: 50,
-        }}
-        snapToInterval={150}
-        decelerationRate="fast"
-        renderItem={(item) =&gt; renderItem(item)}
-        onMomentumScrollEnd={<span class="fstat-no" title="function not covered" >e </span>=&gt; <span class="cstat-no" title="statement not covered" >handleActiveIndex(Math.round(e.nativeEvent.contentOffset.x / 158))}</span>
-        horizontal
-      /&gt;
-    &lt;/Styles.container&gt;
+&nbsp;
+    &lt;FlatList
+      ref={ref}
+      data={data}
+      showsHorizontalScrollIndicator={false}
+      ListEmptyComponent={&lt;EmptyCompoent /&gt;}
+      testID={Contants.testIdSeriesPopular}
+      keyExtractor={(it) =&gt; it.id.toString()}
+      contentContainerStyle={{
+        paddingRight: 50
+      }}
+      snapToInterval={150}
+      decelerationRate="fast"
+      renderItem={(item) =&gt; renderItem(item)}
+      onMomentumScrollEnd={<span class="fstat-no" title="function not covered" >e </span>=&gt; <span class="cstat-no" title="statement not covered" >handleActiveIndex(Math.round(e.nativeEvent.contentOffset.x / 158))}</span>
+      horizontal
+    /&gt;
+&nbsp;
+&nbsp;
   )
 &nbsp;
 }
 &nbsp;
-export default forwardRef(ListSereisPopular)</pre></td></tr></table></pre>
+export default forwardRef(ListDiscovers)</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-06-21T19:52:04.319Z
+                at 2023-06-21T23:44:30.069Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
