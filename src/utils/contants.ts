@@ -6,5 +6,7 @@ export class Contants {
   static testIdImageSeriesPopular = "testId series popular"
   static testIdSeriesItem = "test Id series Item"
   static testIdContainerRatings = 'teste id container ratings'
-  static teestIdIndicatorsSeriesPopular = "test id indicators series popular"
+  static testIdIndicatorsSeriesPopular = "test id indicators series popular"
+  static testIdIconInputHome = "test id icon input home"
+  static testIdWrapperInputWithIcon = "test id wrapper input with icon"
 }

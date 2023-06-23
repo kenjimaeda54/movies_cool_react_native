@@ -1,4 +1,4 @@
-import { FlatList, Text, View, } from "react-native";
+import { FlatList, Text, } from "react-native";
 import * as Styles from "./cardPresentation.styles";
 import { DiscoverResults } from "@/models/discover_model";
 import { Contants } from "@/utils/contants";
@@ -38,9 +38,7 @@ function renderItem({ item }: { item: DiscoverResults }) {
 const ListDiscovers: ForwardRefRenderFunction<FlatList<DiscoverResults>, IListSeriesPopular> = ({ data, handleActiveIndex }, ref) => {
 
 
-
   return (
-
     <FlatList
       ref={ref}
       data={data}

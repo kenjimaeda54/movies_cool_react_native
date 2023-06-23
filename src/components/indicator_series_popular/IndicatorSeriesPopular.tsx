@@ -9,6 +9,6 @@ export interface IIndicatorSeriesPopular extends TouchableOpacityProps {
 }
 
 export default function IndicatorSeriesPopular({ activeIndex, index, ...rest }: IIndicatorSeriesPopular) {
-  const testId = `${Contants.teestIdIndicatorsSeriesPopular}-${index}`
+  const testId = `${Contants.testIdIndicatorsSeriesPopular}-${index}`
   return <Styles.indicator accessibilityRole={"button"} {...rest} activeIndex={activeIndex} index={index} testID={testId} />
 }

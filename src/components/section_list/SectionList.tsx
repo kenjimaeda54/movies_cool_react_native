@@ -1,4 +1,3 @@
-import { View } from "react-native"
 import * as Styles from "./section_list.styles"
 import { ReactNode } from "react"
 import { DiscoverModel } from "@/models/discover_model"

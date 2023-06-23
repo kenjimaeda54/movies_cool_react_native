@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for components/section_list/section_list.styles.ts</title>
+    <title>Code coverage report for components/list_discovers/cardPresentation.styles.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">components/section_list</a> section_list.styles.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">components/list_discovers</a> cardPresentation.styles.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/6</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/6</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -88,21 +88,16 @@
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">20x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">20x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -113,31 +108,42 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Dimensions } from "react-native"
-import styled from "styled-components/native"
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53x</span>
+<span class="cline-any cline-yes">53x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Dimensions } from "react-native";
+import styled from "styled-components/native";
 &nbsp;
 const { width } = Dimensions.get("window")
 &nbsp;
-export const container = styled.View`
-   width: ${width}px;
 &nbsp;
+export const viewItem = styled.View`
+   margin-right: 20px;
+   width: 200px;
+ 
 `
 &nbsp;
-export const titleSection = styled.Text` 
-  font-size: 22px;
-  font-family: ${({ theme }) =&gt; theme.fonts.bold};
-  line-height: 27px;
-  color:  ${({ theme }) =&gt; theme.color.grayLight};
-  margin-bottom: 20px;
-&nbsp;
+export const image = styled.Image`
+  height: 280px;
+  border-radius: 10px;
 `
 &nbsp;
-export const wrappListIndicator = styled.View`
-  flex-direction:  row;
-  justify-content: center;
-  align-items: center;
-  margin-top: 30px;
-  
+&nbsp;
+export const textItem = styled.Text`
+   margin-top: 15px;
+   font-family: ${({ theme }) =&gt; theme.fonts.medium};
+   color: ${({ theme }) =&gt; theme.color.grayLight};
+   font-size: 21px;
+`
+export const wrapIcons = styled.View`
+  flex-direction: row;
+&nbsp;
 `</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->

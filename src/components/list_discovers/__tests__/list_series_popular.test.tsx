@@ -1,10 +1,7 @@
 import { mock } from "@/mock/mock_data"
 import ListDiscovers from "../ListDiscovers";
 import { Contants } from "@/utils/contants";
-import { render } from "@/utils/test-utils";
-
-
-
+import { fireEvent, render } from "@/utils/test-utils";
 
 
 const item = {
@@ -16,10 +13,10 @@ const item = {
 
 describe('ListSeriesPopular', () => {
 
-  const onMomenetScroolEnd = jest.fn()
+  const onMomentScroll = jest.fn()
 
   it('should renders a FlatList with the correct data', () => {
-    const { getByTestId, getAllByTestId } = render(<ListDiscovers handleActiveIndex={onMomenetScroolEnd} data={mock.results} />)
+    const { getByTestId, getAllByTestId } = render(<ListDiscovers handleActiveIndex={onMomentScroll} data={mock.results} />)
     const element = getByTestId(Contants.testIdSeriesPopular)
     const items = getAllByTestId(Contants.testIdSeriesItem);
     expect(element.props.data).toEqual(mock.results)
@@ -27,7 +24,7 @@ describe('ListSeriesPopular', () => {
   });
 
   it('should render EmptyCompoent when dont have data', () => {
-    const { getByText } = render(<ListDiscovers handleActiveIndex={onMomenetScroolEnd} data={[]} />) // aqui estou testando ListEmptyComponent
+    const { getByText } = render(<ListDiscovers handleActiveIndex={onMomentScroll} data={[]} />) // aqui estou testando ListEmptyComponent
     const text = getByText(/Não tem nada de novo aqui/i)
     expect(text).toBeTruthy()
 
@@ -37,7 +34,7 @@ describe('ListSeriesPopular', () => {
 
 
   it('should renders the correct name,img', () => {
-    const { getByTestId } = render(<ListDiscovers handleActiveIndex={onMomenetScroolEnd} data={mock.results} />)
+    const { getByTestId } = render(<ListDiscovers handleActiveIndex={onMomentScroll} data={mock.results} />)
     const itemId = getByTestId(Contants.testIdSeriesPopular)
 
     const { getByText, getByTestId: getByTestIdItem } = render(itemId.props.renderItem({ item }))
@@ -46,6 +43,21 @@ describe('ListSeriesPopular', () => {
     const image = getByTestIdItem(Contants.testIdImageSeriesPopular)
     expect(name).toBeTruthy()
     expect(image.props.source.uri).toEqual(`${Contants.baseUrlImage}/${item.backdrop_path}`)
+
+  });
+
+  it('handleActiveIndex function should return index correct after end scrool', () => {
+    const eventData = {
+      nativeEvent: {
+        contentOffset: {
+          x: 400,
+        },
+      },
+    };
+    const { getByTestId } = render(<ListDiscovers handleActiveIndex={() => onMomentScroll(Math.round(eventData.nativeEvent.contentOffset.x / 200))} data={mock.results} />)
+    const element = getByTestId(Contants.testIdSeriesPopular)
+    fireEvent(element, 'onMomentumScrollEnd', eventData)
+    expect(onMomentScroll).toBeCalledWith(2)
 
   });
 

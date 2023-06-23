@@ -1,19 +1,21 @@
 import { mock } from "@/mock/mock_data";
 import { DiscoverModel, DiscoverResults } from "@/models/discover_model";
 import { ReactNode, RefObject, useEffect, useRef, useState } from "react";
-import { FlatList, NativeSyntheticEvent, TextInputContentSizeChangeEventData } from "react-native";
+import { FlatList } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useTheme } from "styled-components/native";
 
-interface IHomeViewModel {
+export interface IHomeViewModel {
   series: DiscoverModel,
   returnQuantityIconsRatings: (ratings: number) => ReactNode[]
   activeIndexSeries: number,
   handleCurrentIndex: (index: number) => void
   refSeries: RefObject<FlatList<DiscoverResults>>
   handleScroolOffset: (index: number) => void
-  handleHeightInput: (e: NativeSyntheticEvent<TextInputContentSizeChangeEventData>) => void
+  handleHeightInput: (height: number) => void
   inputHeight: number
+  setSearchMovieOrSerie: (search: string) => void
+  searchMovieOrSerie: string
 }
 
 
@@ -23,7 +25,7 @@ export default function useHomeViewModel(): IHomeViewModel {
   const [activeIndexSeries, setActiveIndexSeries] = useState(0)
   const refSeries = useRef<FlatList<DiscoverResults>>(null)
   const [inputHeight, setInputHeight] = useState(20)
-
+  const [searchMovieOrSerie, setSearchMovieOrSerie] = useState("")
   const { color } = useTheme()
 
   useEffect(() => {
@@ -31,16 +33,15 @@ export default function useHomeViewModel(): IHomeViewModel {
   }, [])
 
 
+
   function handleScroolOffset(index: number) {
     refSeries.current?.scrollToOffset({
       offset: 165 * index,
       animated: true
     })
-
-
   }
 
-  const handleHeightInput = (e: NativeSyntheticEvent<TextInputContentSizeChangeEventData>) => setInputHeight(e.nativeEvent.contentSize.height + 7)
+  const handleHeightInput = (height: number) => setInputHeight(height + 7)
 
 
   const handleCurrentIndex = (index: number) => setActiveIndexSeries(index)
@@ -84,7 +85,9 @@ export default function useHomeViewModel(): IHomeViewModel {
     refSeries,
     handleScroolOffset,
     inputHeight,
-    handleHeightInput
+    handleHeightInput,
+    setSearchMovieOrSerie,
+    searchMovieOrSerie
   }
 }
 
