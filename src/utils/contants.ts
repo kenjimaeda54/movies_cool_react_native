@@ -9,4 +9,5 @@ export class Contants {
   static testIdIndicatorsSeriesPopular = "test id indicators series popular"
   static testIdIconInputHome = "test id icon input home"
   static testIdWrapperInputWithIcon = "test id wrapper input with icon"
+  static keyReactQueryMovie = "ReactQueryMovie"
 }

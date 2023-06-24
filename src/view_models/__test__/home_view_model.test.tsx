@@ -15,7 +15,6 @@ describe('useHomeViewModel', () => {
   it('handleHeightInput function should change height input', () => {
     const { result } = renderHook(() => useHomeViewModel(), { wrapper })
 
-
     act(() => {
       result.current.handleHeightInput(7)
 
@@ -28,7 +27,6 @@ describe('useHomeViewModel', () => {
 
   it('handleCurrentIndex function should change index active', () => {
     const { result } = renderHook(() => useHomeViewModel(), { wrapper })
-
 
     act(() => {
       result.current.handleCurrentIndex(7)

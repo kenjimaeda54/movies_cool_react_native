@@ -14,7 +14,8 @@ module.exports = {
           "@/utils": "./src/utils",
           "@/themes": "./src/themes",
           "@/mock": "./src/mock",
-          "@/view_models": "./src/view_models"
+          "@/view_models": "./src/view_models",
+          "@/services": "./src/services"
         },
         extensions: [
           ".js",
