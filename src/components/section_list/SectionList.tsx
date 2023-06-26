@@ -20,8 +20,8 @@ function EmptyCompoent() {
 }
 
 
-//TODO: - transformar em generico
-//https://xebia.com/blog/generic-listitem-in-react-native-using-typescript/
+// TODO: - transformar em generico
+// https://xebia.com/blog/generic-listitem-in-react-native-using-typescript/
 export default function SectionList<T>({ data, titleSection, renderDetails: RenderDetails, ...rest }: ISectionList<T>) {
 
 

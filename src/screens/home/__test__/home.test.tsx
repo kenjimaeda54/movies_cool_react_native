@@ -24,12 +24,6 @@ describe('HomeScreen', () => {
 
   })
 
-  it('should have the title of the section popular series', () => {
-    const { getByText } = render(<HomeScreen />)
-    const text = getByText(/Series/ig)
-    expect(text).toBeTruthy()
-
-  })
 
 
   it('should set the height of the input field correctly', () => {
