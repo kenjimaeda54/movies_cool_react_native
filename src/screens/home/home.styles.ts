@@ -1,4 +1,5 @@
 import { Dimensions } from "react-native";
+import FastImage from "react-native-fast-image";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components/native";
 
@@ -37,21 +38,31 @@ export const image = styled.Image`
 `
 
 
-export const textItem = styled.Text`
-   margin-top: 15px;
-   font-family: ${({ theme }) => theme.fonts.medium};
-   color: ${({ theme }) => theme.color.grayLight};
-   font-size: 21px;
-`
 export const wrapIcons = styled.View`
   flex-direction: row;
 
 `
 
 export const wrapperFooterComponent = styled.View`
- width: 100%;
- height: 100%;
  justify-content: center;
  align-items: center;
 
+`
+
+export const imageItem = styled(FastImage)`
+  width: 100%; 
+  height: 100%; 
+  flex: 1;
+  border-radius: 4px;
+  border-width: 1px;
+  border-color: ${({ theme }) => theme.color.grayLight}
+
+`
+
+
+export const textItem = styled.Text`
+   margin-top: 15px;
+   font-family: ${({ theme }) => theme.fonts.medium};
+   color: ${({ theme }) => theme.color.grayLight};
+   font-size: 21px;
 `

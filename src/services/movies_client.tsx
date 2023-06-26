@@ -1,47 +1,43 @@
-import { DiscoverModel } from "@/models/discover_model";
+import { MoviesModel } from "@/models/movies_model";
 import api from "@/services/api";
 import { Contants } from "@/utils/contants";
-import { FetchNextPageOptions, InfiniteData, InfiniteQueryObserverResult, QueryKey, useInfiniteQuery } from "@tanstack/react-query";
-import { Dispatch, useState } from "react";
-
+import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 
 
 
 export interface IUseMoviesClient {
-  isLoadingSeries: boolean
-  dataSeries: InfiniteData<DiscoverModel>
-  hasNextPage: boolean
-  isFetchingSeries: boolean
-  handleMoreDataMovie: () => void
+  dataMovies: InfiniteData<MoviesModel>
+  isFetchingMovies: boolean
+  handleMoreDataMovies: () => void
 }
 
 let currentPage = 1
 
-async function fetchSeries() {
-  const response = await api.get(`/discover/tv?include_adult=false&include_null_first_air_dates=false&language=pt-BR&page=${currentPage}&sort_by=popularity.desc`)
-  return response.data as DiscoverModel
+async function fetchMovies() {
+  const response = await api.get(`/discover/movie?include_adult=false&include_null_first_air_dates=false&language=pt-BR&page=${currentPage}&sort_by=popularity.desc`)
+  return response.data as MoviesModel
 }
 
 
 export default function useMoviesClient(): IUseMoviesClient {
 
 
-  function fetchPage(discover: DiscoverModel) {
-    if (currentPage <= 7) {
-      return `/discover/tv?include_adult=false&include_null_first_air_dates=false&language=pt-BR&page=${currentPage}&sort_by=popularity.desc`
+  function fetchPage(discover: MoviesModel) {
+    if (currentPage <= 10) {
+      return `/discover/movie?include_adult=false&include_null_first_air_dates=false&language=pt-BR&page=${currentPage}&sort_by=popularity.desc`
     }
 
     return discover
 
   }
 
-  const { isLoading: isLoadingSeries, data: dataSeries = {} as InfiniteData<DiscoverModel>, hasNextPage = false, fetchNextPage, isFetching: isFetchingSeries } = useInfiniteQuery([Contants.keyReactQueryMovie], fetchSeries, {
+  const { data: dataMovies = {} as InfiniteData<MoviesModel>, hasNextPage = false, fetchNextPage, isFetching: isFetchingMovies } = useInfiniteQuery([Contants.keyReactQuerySerie], fetchMovies, {
     getNextPageParam: fetchPage
   })
 
 
-  function handleMoreDataMovie() {
-    if (hasNextPage) {
+  function handleMoreDataMovies() {
+    if (hasNextPage && currentPage <= 10) {
       currentPage += 1
       fetchNextPage()
     }
@@ -50,11 +46,9 @@ export default function useMoviesClient(): IUseMoviesClient {
 
 
   return {
-    isFetchingSeries,
-    isLoadingSeries,
-    dataSeries,
-    hasNextPage,
-    handleMoreDataMovie
+    isFetchingMovies,
+    dataMovies,
+    handleMoreDataMovies
   }
 
 

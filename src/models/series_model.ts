@@ -1,10 +1,11 @@
 
-export interface DiscoverModel {
+
+export interface SeriesModel {
   page: number
-  results: Array<DiscoverResults>
+  results: Array<SeriesResults>
 }
 
-export interface DiscoverResults {
+export interface SeriesResults {
   "backdrop_path": string,
   "first_air_date": string,
   "genre_ids": Array<number>,

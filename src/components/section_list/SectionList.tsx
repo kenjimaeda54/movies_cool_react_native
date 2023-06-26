@@ -1,19 +1,15 @@
 import * as Styles from "./section_list.styles"
-import { ReactNode } from "react"
-import { DiscoverModel, DiscoverResults } from "@/models/discover_model"
-import IndicatorSeriesPopular from "@/components/indicator_series_popular/IndicatorSeriesPopular"
+import { FC } from "react"
+
 import { FlashList, FlashListProps } from "@shopify/flash-list"
 import { Dimensions, Text, View } from "react-native"
 import { Contants } from "@/utils/contants"
-import { mock } from "@/mock/mock_data"
-import FastImage from "react-native-fast-image"
 
 
-const { width } = Dimensions.get("screen")
-
-interface ISectionList extends Omit<FlashListProps<DiscoverResults>, "renderItem"> {
-  data: DiscoverResults[]
+interface ISectionList<T> extends Omit<FlashListProps<T>, "renderItem"> {
+  data: T[]
   titleSection: string
+  renderDetails: FC<{ item: T }>
 }
 
 
@@ -24,28 +20,22 @@ function EmptyCompoent() {
 }
 
 
-function renderItem({ item }: { item: DiscoverResults }) {
+//TODO: - transformar em generico
+//https://xebia.com/blog/generic-listitem-in-react-native-using-typescript/
+export default function SectionList<T>({ data, titleSection, renderDetails: RenderDetails, ...rest }: ISectionList<T>) {
 
 
-  return (
-    <Styles.viewItem testID={Contants.testIdSeriesItem} >
-      <Styles.image
-        testID={Contants.testIdImageSeriesPopular}
-        source={{
-          uri: `${Contants.baseUrlImage}/${item.backdrop_path}`,
-          priority: FastImage.priority.high,
-          cache: "immutable"
-        }}
-        resizeMode={FastImage.resizeMode.cover}
-      />
-      {/*overflow usa numberOfline*/}
-      <Styles.textItem numberOfLines={1}  >{item.name}</Styles.textItem>
-    </Styles.viewItem>
-  )
-}
+  function renderItem({ item }: { item: T }) {
 
 
-export default function SectionList({ data, titleSection, ...rest }: ISectionList) {
+    return (
+      <Styles.viewItem testID={Contants.testIdSeriesItem} >
+        <RenderDetails item={item} />
+      </Styles.viewItem>
+    )
+  }
+
+
   return (
     <Styles.container>
       <Styles.titleSection>{titleSection}</Styles.titleSection>
