@@ -1,11 +1,22 @@
-import { mock } from "@/mock/mock_data";
-import { DiscoverModel, SeriesResults } from "@/models/movies_model";
-import useMoviesClient, { IUseMoviesClient } from "@/services/movies_client";
-import useSeriesClient, { IUseSeriesClient } from "@/services/series_client";
-import { useState } from "react";
-import { useTheme } from "styled-components/native";
+import { mockSeries } from '@/mock/mock_data'
+import useMoviesClient, {
+  IUseMoviesClient,
+} from '@/services/movies_client'
+import useSeriesClient, {
+  IUseSeriesClient,
+} from '@/services/series_client'
+import { useState } from 'react'
+import { useTheme } from 'styled-components/native'
 
-export interface IHomeViewModel extends Clients {
+type OmitValues =
+  | 'currentPageSeries'
+  | 'fetchPageSeries'
+  | 'fetchPageMovies'
+  | 'currentPageMovies'
+  | 'fetchNextPageMovies'
+  | 'fetchNextPageSeries'
+
+export interface IHomeViewModel extends Omit<Clients, OmitValues> {
   handleHeightInput: (height: number) => void
   inputHeight: number
   setSearchMovieOrSerie: (search: string) => void
@@ -14,18 +25,26 @@ export interface IHomeViewModel extends Clients {
 
 type Clients = IUseSeriesClient & IUseMoviesClient
 
-
 export default function useHomeViewModel(): IHomeViewModel {
-  const { isFetchingSeries, dataSeries, handleMoreDataSeries } = useSeriesClient()
-  const { isFetchingMovies, dataMovies, handleMoreDataMovies } = useMoviesClient()
+  const {
+    isFetchingSeries,
+    dataSeries,
+    handleMoreDataSeries,
+    isSucessSeries,
+  } = useSeriesClient()
+
+  const {
+    isFetchingMovies,
+    dataMovies,
+    handleMoreDataMovies,
+    isSuccessMovies,
+  } = useMoviesClient()
+
   const [inputHeight, setInputHeight] = useState(20)
-  const [searchMovieOrSerie, setSearchMovieOrSerie] = useState("")
+  const [searchMovieOrSerie, setSearchMovieOrSerie] = useState('')
 
-
-
-  const handleHeightInput = (height: number) => setInputHeight(height + 7)
-
-
+  const handleHeightInput = (height: number) =>
+    setInputHeight(height + 7)
 
   return {
     inputHeight,
@@ -38,6 +57,7 @@ export default function useHomeViewModel(): IHomeViewModel {
     isFetchingMovies,
     dataMovies,
     handleMoreDataMovies,
+    isSuccessMovies,
+    isSucessSeries,
   }
 }
-

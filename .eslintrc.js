@@ -1,6 +1,10 @@
 module.exports = {
   root: true,
-  extends: ['@react-native-community', '@styled-component', 'plugin:jest/recommended'],
+  extends: [
+    '@react-native-community',
+    '@styled-component',
+    'plugin:jest/recommended',
+  ],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
   overrides: [
@@ -13,4 +17,4 @@ module.exports = {
       },
     },
   ],
-};
+}

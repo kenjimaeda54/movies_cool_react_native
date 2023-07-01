@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36.36% </span>
+                <span class="strong">90% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/11</span>
+                <span class='fraction'>9/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36.36% </span>
+                <span class="strong">90% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/11</span>
+                <span class='fraction'>9/10</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -117,7 +117,14 @@
 <a name='L52'></a><a href='#L52'>52</a>
 <a name='L53'></a><a href='#L53'>53</a>
 <a name='L54'></a><a href='#L54'>54</a>
-<a name='L55'></a><a href='#L55'>55</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -130,11 +137,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -142,8 +144,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -151,88 +155,105 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { MoviesModel } from "@/models/movies_model";
-import api from "@/services/api";
-import { Contants } from "@/utils/contants";
-import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
-&nbsp;
-&nbsp;
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { MoviesModel } from '@/models/movies_model'
+import api from '@/services/api'
+import { Contants } from '@/utils/contants'
+import {
+  InfiniteData,
+  InfiniteQueryObserverResult,
+  useInfiniteQuery,
+} from '@tanstack/react-query'
+import { MutableRefObject, useRef } from 'react'
 &nbsp;
 export interface IUseMoviesClient {
   dataMovies: InfiniteData&lt;MoviesModel&gt;
   isFetchingMovies: boolean
   handleMoreDataMovies: () =&gt; void
+  isSuccessMovies: boolean
+  currentPageMovies: MutableRefObject&lt;number&gt;
+  fetchPageMovies: (discover: MoviesModel) =&gt; void
 }
-&nbsp;
-let currentPage = 1
-&nbsp;
-async function fetchMovies() {
-  const response = await api.get(`/discover/movie?include_adult=false&amp;include_null_first_air_dates=false&amp;language=pt-BR&amp;page=${currentPage}&amp;sort_by=popularity.desc`)
-<span class="cstat-no" title="statement not covered" >  return response.data as MoviesModel</span>
-}
-&nbsp;
 &nbsp;
 export default function useMoviesClient(): IUseMoviesClient {
+  let currentPageMovies = useRef(1)
 &nbsp;
-&nbsp;
-  function <span class="fstat-no" title="function not covered" >fetchPage(</span>discover: MoviesModel) {
-<span class="cstat-no" title="statement not covered" >    if (currentPage &lt;= 10) {</span>
-<span class="cstat-no" title="statement not covered" >      return `/discover/movie?include_adult=false&amp;include_null_first_air_dates=false&amp;language=pt-BR&amp;page=${currentPage}&amp;sort_by=popularity.desc`</span>
-    }
-&nbsp;
-<span class="cstat-no" title="statement not covered" >    return discover</span>
-&nbsp;
+  async function fetchMovies() {
+    const response = await api.get(
+      `/discover/movie?include_adult=false&amp;include_null_first_air_dates=false&amp;language=pt-BR&amp;page=${currentPageMovies.current}&amp;sort_by=popularity.desc`
+    )
+<span class="cstat-no" title="statement not covered" >    return response.data as MoviesModel</span>
   }
 &nbsp;
-  const { data: dataMovies = {} as InfiniteData&lt;MoviesModel&gt;, hasNextPage = false, fetchNextPage, isFetching: isFetchingMovies } = useInfiniteQuery([Contants.keyReactQuerySerie], fetchMovies, {
-    getNextPageParam: fetchPage
+  function fetchPageMovies(discover: MoviesModel) {
+    if (currentPageMovies.current &lt;= 5) {
+      return `/discover/movie?include_adult=false&amp;include_null_first_air_dates=false&amp;language=pt-BR&amp;page=${currentPageMovies.current}&amp;sort_by=popularity.desc`
+    }
+&nbsp;
+    return discover
+  }
+&nbsp;
+  const {
+    data: dataMovies = {} as InfiniteData&lt;MoviesModel&gt;,
+    hasNextPage = true, // o default precisei deixar como 4 para passar na condiçaõ do hadleMoreDateMovies
+    isFetching: isFetchingMovies,
+    isSuccess: isSuccessMovies,
+  } = useInfiniteQuery([Contants.keyReactQuerySerie], fetchMovies, {
+    getNextPageParam: fetchPageMovies,
   })
 &nbsp;
-&nbsp;
-  function <span class="fstat-no" title="function not covered" >handleMoreDataMovies(</span>) {
-<span class="cstat-no" title="statement not covered" >    if (hasNextPage &amp;&amp; currentPage &lt;= 10) {</span>
-<span class="cstat-no" title="statement not covered" >      currentPage += 1</span>
-<span class="cstat-no" title="statement not covered" >      fetchNextPage()</span>
+  function handleMoreDataMovies() {
+    if (hasNextPage &amp;&amp; currentPageMovies.current &lt;= 5) {
+      currentPageMovies.current += 1
     }
-&nbsp;
   }
-&nbsp;
 &nbsp;
   return {
     isFetchingMovies,
     dataMovies,
-    handleMoreDataMovies
+    handleMoreDataMovies,
+    isSuccessMovies,
+    fetchPageMovies, //essa logica e para testes não sera usando na view
+    currentPageMovies, //essa logica e para testes não sera usando na view
   }
-&nbsp;
-&nbsp;
-}</pre></td></tr></table></pre>
+}
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-06-26T23:45:07.801Z
+                at 2023-07-01T14:57:29.760Z
             </div>
         <script src="../prettify.js"></script>
         <script>

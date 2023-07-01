@@ -1,6 +1,4 @@
-import styled from "styled-components/native"
-
-
+import styled from 'styled-components/native'
 
 interface IVieOffeset {
   height: number
@@ -9,14 +7,14 @@ interface IVieOffeset {
 export const viewInput = styled.View`
   position: relative;
   margin-bottom: 30px;
-  justify-content: center ;
+  justify-content: center;
 `
 
 export const prefix = styled.View<IVieOffeset>`
- position: absolute;
- bottom: ${({ height }) => height / 2 - 5}px;
- top: ${({ height }) => height / 2 - 5}px;
- left: 20px;
+  position: absolute;
+  bottom: ${({ height }) => height / 2 - 5}px;
+  top: ${({ height }) => height / 2 - 5}px;
+  left: 20px;
 `
 
 export const viewOffsetHeight = styled.View<IVieOffeset>`
@@ -29,15 +27,11 @@ export const viewOffsetHeight = styled.View<IVieOffeset>`
   border-width: 1px;
   border-color: ${({ theme }) => theme.color.grayLight};
   border-radius: 20px;
- 
 `
 
 export const input = styled.TextInput<IVieOffeset>`
-   font-family: ${({ theme }) => theme.fonts.light};
-   font-size: 17px;
-   line-height: 21px;
-   color: ${({ theme }) => theme.color.grayLight};
+  font-family: ${({ theme }) => theme.fonts.light};
+  font-size: 17px;
+  line-height: 21px;
+  color: ${({ theme }) => theme.color.grayLight};
 `
-
-
-

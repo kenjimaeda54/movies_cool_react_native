@@ -1,32 +1,33 @@
 module.exports = {
   presets: ['module:metro-react-native-babel-preset'],
+
   plugins: [
     [
       'module-resolver',
       {
-        root: ".",
+        root: '.',
         alias: {
           '@/components': './src/components',
-          "@/routes": "./src/routes",
-          "@/screens": "./src/screens",
-          "@/declaration": "./src/declaration",
-          "@/global": "./src/global",
-          "@/utils": "./src/utils",
-          "@/themes": "./src/themes",
-          "@/mock": "./src/mock",
-          "@/view_models": "./src/view_models",
-          "@/services": "./src/services"
+          '@/routes': './src/routes',
+          '@/screens': './src/screens',
+          '@/declaration': './src/declaration',
+          '@/global': './src/global',
+          '@/utils': './src/utils',
+          '@/themes': './src/themes',
+          '@/mock': './src/mock',
+          '@/view_models': './src/view_models',
+          '@/services': './src/services',
         },
         extensions: [
-          ".js",
-          ".jsx",
-          ".ts",
-          ".tsx",
-          ".android.js",
-          ".android.tsx",
-          ".ios.js",
-          ".ios.tsx"
-        ]
+          '.js',
+          '.jsx',
+          '.ts',
+          '.tsx',
+          '.android.js',
+          '.android.tsx',
+          '.ios.js',
+          '.ios.tsx',
+        ],
       },
     ],
     [
@@ -35,5 +36,5 @@ module.exports = {
         runtime: 'automatic',
       },
     ],
-  ]
-};
+  ],
+}
