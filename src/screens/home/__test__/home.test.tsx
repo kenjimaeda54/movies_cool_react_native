@@ -10,16 +10,7 @@ import SectionList from '@/components/section_list/SectionList'
 import { Text } from 'react-native'
 import { SeriesModel, SeriesResults } from '@/models/series_model'
 import { MoviesResults } from '@/models/movies_model'
-import { renderHook } from '@testing-library/react-hooks'
-import { ReactNode } from 'react'
-import {
-  InfiniteData,
-  QueryClientProvider,
-} from '@tanstack/react-query'
-import { queryClient } from '@/services/query_client'
-import useSeriesClient from '@/services/series_client'
-import nock from 'nock'
-import { resultsDataSeries } from '@/mock/mock_implementation_data_series'
+import { InfiniteData } from '@tanstack/react-query'
 
 describe('HomeScreen', () => {
   const mockEventContentSize = {
@@ -98,7 +89,9 @@ describe('HomeScreen', () => {
         data={dataSeries.pages?.map((page) => page.results).flat()}
         onEndReached={handleMoreDataSeries}
         ListFooterComponent={
-          isFetchingSeries ? <FooterComponent /> : null
+          isFetchingSeries ? (
+            <FooterComponent showComponent={false} />
+          ) : null
         }
       />
     )
@@ -108,48 +101,22 @@ describe('HomeScreen', () => {
     expect(getByText('Series 110')).toBeTruthy()
   })
 
-  it('should render FooterComponent when isFetchingSeries is true', () => {
+  it('should render  children on FooterComponent when isFetchingSeries is true', () => {
     isFetchingSeries = true
     const { getByTestId } = render(
-      <SectionList
-        titleSection='Series'
-        isSuccess={true}
-        renderDetails={({ item }) => (
-          <Text accessibilityRole='text'>{item.name}</Text>
-        )}
-        data={dataSeries.pages?.map((page) => page.results).flat()}
-        onEndReached={handleMoreDataSeries}
-        ListFooterComponent={
-          isFetchingSeries ? <FooterComponent /> : null
-        }
-      />
+      <FooterComponent showComponent={isFetchingSeries} />
     )
-    const element = getByTestId(
-      Contants.testIdSectionListSeriesMovies
-    )
-    expect(element.props.ListFooterComponent).not.toBeNull()
+    const element = getByTestId(Contants.testIdFooterComponentHome)
+    expect(element.children.length).toBe(1)
   })
 
-  it('should not render FooterComponent when isFetchingSeries is false', () => {
+  it('should not render children on component FooterComponent when isFetchingSeries is false', async () => {
     isFetchingSeries = false
     const { getByTestId } = render(
-      <SectionList
-        titleSection='Series'
-        isSuccess={true}
-        renderDetails={({ item }) => (
-          <Text accessibilityRole='text'>{item.name}</Text>
-        )}
-        data={dataSeries.pages?.map((page) => page.results).flat()}
-        onEndReached={handleMoreDataSeries}
-        ListFooterComponent={
-          isFetchingSeries ? <FooterComponent /> : null
-        }
-      />
+      <FooterComponent showComponent={isFetchingSeries} />
     )
-    const element = getByTestId(
-      Contants.testIdSectionListSeriesMovies
-    )
-    expect(element.props.ListFooterComponent).toBeNull()
+    const element = getByTestId(Contants.testIdFooterComponentHome)
+    expect(element.children.length).toBe(0) //uma maneira de testar se o container tem filhos
   })
 
   it('should render the movie image and title correctly', () => {
@@ -182,25 +149,5 @@ describe('HomeScreen', () => {
       `${Contants.baseUrlImage}/https://images.unsplash.com/photo-1661956602139-ec64991b8b16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=365&q=80`
     )
     expect(getByText('Simpsons')).toBeTruthy()
-  })
-
-  it('should does not render series section wwhen data is null', () => {
-    const dataSeries = {
-      pages: null,
-    } as unknown as InfiniteData<SeriesModel>
-    const { debug } = render(
-      <SectionList
-        titleSection='Series'
-        isSuccess={true}
-        renderDetails={({ item }) => (
-          <Text accessibilityRole='text'>{item.name}</Text>
-        )}
-        data={dataSeries.pages?.map((page) => page.results).flat()}
-        onEndReached={handleMoreDataSeries}
-        ListFooterComponent={
-          isFetchingSeries ? <FooterComponent /> : null
-        }
-      />
-    )
   })
 })

@@ -66,6 +66,8 @@ export const mockSeries = {
       vote_count: 5,
     },
   ],
+  total_pages: 7575,
+  total_results: 151488,
 }
 
 export const mockMovies = {
@@ -123,4 +125,6 @@ export const mockMovies = {
       vote_count: 1846,
     },
   ],
+  total_pages: 38944,
+  total_results: 778866,
 }

@@ -6,7 +6,7 @@ import {
   InfiniteQueryObserverResult,
   useInfiniteQuery,
 } from '@tanstack/react-query'
-import { MutableRefObject, useRef } from 'react'
+import { MutableRefObject, useRef, useState } from 'react'
 
 export interface IUseMoviesClient {
   dataMovies: InfiniteData<MoviesModel>
@@ -15,17 +15,18 @@ export interface IUseMoviesClient {
   isSuccessMovies: boolean
   currentPageMovies: MutableRefObject<number>
   fetchPageMovies: (discover: MoviesModel) => void
+  fetchMovies: () => Promise<MoviesModel>
+}
+
+export async function fetchMovies(currentPage: number) {
+  const response = await api.get(
+    `/discover/movie?include_adult=false&include_null_first_air_dates=false&language=pt-BR&page=${currentPage}&sort_by=popularity.desc`
+  )
+  return response.data as MoviesModel
 }
 
 export default function useMoviesClient(): IUseMoviesClient {
   let currentPageMovies = useRef(1)
-
-  async function fetchMovies() {
-    const response = await api.get(
-      `/discover/movie?include_adult=false&include_null_first_air_dates=false&language=pt-BR&page=${currentPageMovies.current}&sort_by=popularity.desc`
-    )
-    return response.data as MoviesModel
-  }
 
   function fetchPageMovies(discover: MoviesModel) {
     if (currentPageMovies.current <= 5) {
@@ -40,13 +41,19 @@ export default function useMoviesClient(): IUseMoviesClient {
     hasNextPage = true, // o default precisei deixar como 4 para passar na condiçaõ do hadleMoreDateMovies
     isFetching: isFetchingMovies,
     isSuccess: isSuccessMovies,
-  } = useInfiniteQuery([Contants.keyReactQuerySerie], fetchMovies, {
-    getNextPageParam: fetchPageMovies,
-  })
+    fetchNextPage: fetchPagesMovies,
+  } = useInfiniteQuery(
+    [Contants.keyReactQuerySerie],
+    () => fetchMovies(currentPageMovies.current),
+    {
+      getNextPageParam: fetchPageMovies,
+    }
+  )
 
   function handleMoreDataMovies() {
     if (hasNextPage && currentPageMovies.current <= 5) {
       currentPageMovies.current += 1
+      fetchPagesMovies()
     }
   }
 
@@ -57,5 +64,6 @@ export default function useMoviesClient(): IUseMoviesClient {
     isSuccessMovies,
     fetchPageMovies, //essa logica e para testes não sera usando na view
     currentPageMovies, //essa logica e para testes não sera usando na view
+    fetchMovies, //essa logica e para testes não sera usando na view
   }
 }

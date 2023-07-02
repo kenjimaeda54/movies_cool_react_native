@@ -20,15 +20,18 @@ export interface IUseSeriesClient {
   >
 }
 
+
+export async function fetchSeries(currentPage: number) {
+  const response = await api.get(
+    `/discover/tv?include_adult=false&include_null_first_air_dates=false&language=pt-BR&page=${currentPage}&sort_by=popularity.desc`
+  )
+  return response.data as SeriesModel
+}
+
 export default function useSeriesClient(): IUseSeriesClient {
   let currentPageSeries = useRef(1)
 
-  async function fetchSeries() {
-    const response = await api.get(
-      `/discover/tv?include_adult=false&include_null_first_air_dates=false&language=pt-BR&page=${currentPageSeries.current}&sort_by=popularity.desc`
-    )
-    return response.data as SeriesModel
-  }
+
 
   function fetchPageSeries(discover: SeriesModel) {
     if (currentPageSeries.current <= 5) {
@@ -44,7 +47,7 @@ export default function useSeriesClient(): IUseSeriesClient {
     fetchNextPage: fetchNextPageSeries,
     isFetching: isFetchingSeries,
     isSuccess: isSucessSeries,
-  } = useInfiniteQuery([Contants.keyReactQueryMovie], fetchSeries, {
+  } = useInfiniteQuery([Contants.keyReactQueryMovie],()  => fetchSeries(currentPageSeries.current), {
     getNextPageParam: fetchPageSeries,
   })
 

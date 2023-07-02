@@ -1,7 +1,7 @@
 import nock from 'nock'
 import { mockMovies } from '@/mock/mock_data'
 import { renderHook, act } from '@testing-library/react-hooks'
-import useMoviesClient from '../movies_client'
+import useMoviesClient, { fetchMovies } from '../movies_client'
 import { ReactNode } from 'react'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from '../query_client'
@@ -88,5 +88,10 @@ describe('SeriesClient', () => {
     })
 
     expect(result.current.currentPageMovies.current).toBe(6)
+  })
+
+  it('should return correct data when do fetch on api', async () => {
+    const data = await fetchMovies(1)
+    expect(data).toEqual(mockMovies)
   })
 })

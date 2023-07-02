@@ -15,4 +15,6 @@ export class Contants {
   static testIdImageMoviesHome = 'test id Images Movies home'
   static testIdImageSeriesHome = 'test id Images Series home'
   static testIdBodyHome = 'test id body home'
+  static testIdFooterComponentHome = 'test id Footer Component Home'
+  static testIdViewEmptyHome = "test id Footer Component home return empty"
 }

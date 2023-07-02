@@ -17,6 +17,8 @@ module.exports = {
           '@/mock': './src/mock',
           '@/view_models': './src/view_models',
           '@/services': './src/services',
+          '@/test': './src/test',
+          '@/server': './src/test/server',
         },
         extensions: [
           '.js',

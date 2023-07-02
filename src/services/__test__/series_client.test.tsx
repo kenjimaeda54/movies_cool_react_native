@@ -1,4 +1,3 @@
-import { resultsDataSeries } from '@/mock/mock_implementation_data_series'
 import nock from 'nock'
 import { mockSeries } from '@/mock/mock_data'
 import { renderHook } from '@testing-library/react-hooks'
@@ -7,7 +6,7 @@ import { ReactNode } from 'react'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from '../query_client'
 import { act } from 'react-test-renderer'
-import useSeriesClient from '../series_client'
+import useSeriesClient, { fetchSeries } from '../series_client'
 
 describe('SeriesClient', () => {
   const wrapper = ({ children }: { children: ReactNode }) => (
@@ -101,5 +100,10 @@ describe('SeriesClient', () => {
     })
 
     expect(result.current.currentPageSeries.current).toBe(6)
+  })
+
+  it('should return correct data when do fetch on api', async () => {
+    const data = await fetchSeries(1)
+    expect(data).toEqual(mockSeries)
   })
 })

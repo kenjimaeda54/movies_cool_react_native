@@ -14,10 +14,15 @@ import { MoviesResults } from '@/models/movies_model'
 import FastImage from 'react-native-fast-image'
 import { SeriesResults } from '@/models/series_model'
 
-export function FooterComponent() {
+export function FooterComponent({
+  showComponent,
+}: {
+  showComponent: boolean
+}) {
   return (
-    <Styles.wrapperFooterComponent>
-      <ActivityIndicator size='small' />
+    <Styles.wrapperFooterComponent
+      testID={Contants.testIdFooterComponentHome}>
+      {showComponent && <ActivityIndicator size='small' />}
     </Styles.wrapperFooterComponent>
   )
 }
@@ -119,7 +124,7 @@ export default function HomeScreen() {
               .flat()}
             onEndReached={handleMoreDataSeries}
             ListFooterComponent={
-              isFetchingSeries ? <FooterComponent /> : null
+              <FooterComponent showComponent={isFetchingMovies} />
             }
           />
           <View style={{ margin: 30 }} />
@@ -133,7 +138,7 @@ export default function HomeScreen() {
               .flat()}
             onEndReached={handleMoreDataMovies}
             ListFooterComponent={
-              isFetchingMovies ? <FooterComponent /> : null
+              <FooterComponent showComponent={isFetchingSeries} />
             }
           />
         </Styles.body>
