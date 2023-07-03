@@ -16,5 +16,11 @@ export class Contants {
   static testIdImageSeriesHome = 'test id Images Series home'
   static testIdBodyHome = 'test id body home'
   static testIdFooterComponentHome = 'test id Footer Component Home'
-  static testIdViewEmptyHome = "test id Footer Component home return empty"
+  static testIdViewEmptyHome =
+    'test id Footer Component home return empty'
+  static baseURLApi = 'https://api.themoviedb.org/3'
+  static testIdTouchAbleOpacityRenderItemSeries =
+    'test id TouchAbleOpacity Render Item Series'
+  static testIdTouchAbleOpacityRenderItemMovies =
+    'test id TouchAbleOpacity Render Item Movies'
 }

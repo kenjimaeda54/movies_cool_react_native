@@ -7,6 +7,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from '../query_client'
 import { act } from 'react-test-renderer'
 import useSeriesClient, { fetchSeries } from '../series_client'
+import { Contants } from '@/utils/contants'
 
 describe('SeriesClient', () => {
   const wrapper = ({ children }: { children: ReactNode }) => (
@@ -16,7 +17,7 @@ describe('SeriesClient', () => {
   )
 
   beforeAll(() => {
-    nock('https://api.themoviedb.org/3', {
+    nock(Contants.baseURLApi, {
       reqheaders: {
         Authorization:
           'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzNjAzYmY5NWYyYzA4ZmVlYmIxMWIzYjZmYmMxZTRkOCIsInN1YiI6IjY0ODlhZmY1OTkyNTljMDBlMmY3NjE5ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.26KU_696lSCwm-Giq2c7Yo5FqC8tRCZQlioZ8iKx1uM',

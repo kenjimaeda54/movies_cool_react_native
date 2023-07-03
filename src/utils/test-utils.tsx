@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components/native' //precisa ser /native
 import theme from '@/themes/theme'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from '@/services/query_client'
+import { NavigationContainer } from '@react-navigation/native'
 
 type Options = Parameters<typeof render>[1]
 

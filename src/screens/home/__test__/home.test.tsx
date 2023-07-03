@@ -1,24 +1,40 @@
+import { Text } from 'react-native'
+import { renderHook } from '@testing-library/react-hooks'
 import { Contants } from '@/utils/contants'
 import HomeScreen, {
   FooterComponent,
-  renderItemMovies,
-  renderItemSeries,
+  RenderItemMovies,
+  RenderItemSeries,
 } from '@/screens/home/Home'
 import { fireEvent, render } from '@/utils/test-utils'
 import InputHome from '@/screens/home/components/input_home/InputHome'
 import SectionList from '@/components/section_list/SectionList'
-import { Text } from 'react-native'
-import { SeriesModel, SeriesResults } from '@/models/series_model'
+import { SeriesResults } from '@/models/series_model'
 import { MoviesResults } from '@/models/movies_model'
-import { InfiniteData } from '@tanstack/react-query'
+import useHomeViewModel from '@/view_models/home_view_model'
+import { act } from 'react-test-renderer'
+import { mockNavigate } from 'jestSetupFile'
 
 describe('HomeScreen', () => {
   const mockEventContentSize = {
     nativeEvent: { contentSize: { height: 50 } },
   }
+
   const mockHandleHeightInput = jest.fn()
   let isFetchingSeries = false
   let handleMoreDataSeries = jest.fn()
+
+  const itemSeries = {
+    backdrop_path:
+      'https://images.unsplash.com/photo-1661956602139-ec64991b8b16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=365&q=80',
+    name: 'Simpsons',
+  } as SeriesResults
+
+  const itemMovies = {
+    backdrop_path:
+      'https://images.unsplash.com/photo-1661956602139-ec64991b8b16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=365&q=80',
+    original_title: 'Fast X',
+  } as MoviesResults
 
   let dataSeries = {
     pages: [
@@ -120,13 +136,11 @@ describe('HomeScreen', () => {
   })
 
   it('should render the movie image and title correctly', () => {
-    const item = {
-      backdrop_path:
-        'https://images.unsplash.com/photo-1661956602139-ec64991b8b16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=365&q=80',
-      original_title: 'Fast X',
-    } as MoviesResults
     const { getByTestId, getByText } = render(
-      renderItemMovies({ item })
+      <RenderItemMovies
+        item={itemMovies}
+        handleNavigationMovies={() => {}}
+      />
     )
     const imageId = getByTestId(Contants.testIdImageMoviesHome)
     expect(imageId.props.source.uri).toBe(
@@ -136,18 +150,48 @@ describe('HomeScreen', () => {
   })
 
   it('should render the series image and title correctly', () => {
-    const item = {
-      backdrop_path:
-        'https://images.unsplash.com/photo-1661956602139-ec64991b8b16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=365&q=80',
-      name: 'Simpsons',
-    } as SeriesResults
     const { getByTestId, getByText } = render(
-      renderItemSeries({ item })
+      <RenderItemSeries
+        item={itemSeries}
+        handleNavigationSeries={() => {}}
+      />
     )
     const imageId = getByTestId(Contants.testIdImageSeriesHome)
     expect(imageId.props.source.uri).toBe(
       `${Contants.baseUrlImage}/https://images.unsplash.com/photo-1661956602139-ec64991b8b16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=365&q=80`
     )
     expect(getByText('Simpsons')).toBeTruthy()
+  })
+
+  it('should called with itens correct when press handleNavigationMovies', () => {
+    const mockHandleNavigation = jest.fn()
+    const { getByTestId, getByText } = render(
+      <RenderItemMovies
+        item={itemMovies}
+        handleNavigationMovies={mockHandleNavigation}
+      />
+    )
+    const button = getByTestId(
+      Contants.testIdTouchAbleOpacityRenderItemMovies
+    )
+    fireEvent.press(button)
+    expect(mockHandleNavigation).toBeCalledWith(itemMovies) //forma de testar o argumento que esta dentro da função
+    expect(mockHandleNavigation).toBeCalledTimes(1) //maneira de testar se o botão esta sendo chamado
+  })
+
+  it('should called with itens correct when press handleNavigationSeries', () => {
+    const mockHandleNavigation = jest.fn()
+    const { getByTestId, getByText } = render(
+      <RenderItemSeries
+        item={itemSeries}
+        handleNavigationSeries={mockHandleNavigation}
+      />
+    )
+    const button = getByTestId(
+      Contants.testIdTouchAbleOpacityRenderItemSeries
+    )
+    fireEvent.press(button)
+    expect(mockHandleNavigation).toBeCalledWith(itemSeries) //forma de testar o argumento que esta dentro da função
+    expect(mockHandleNavigation).toBeCalledTimes(1) //maneira de testar se o botão esta sendo chamado
   })
 })

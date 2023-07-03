@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { FlashList, FlashListProps } from '@shopify/flash-list'
-import { Dimensions, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 import { Contants } from '@/utils/contants'
 import * as Styles from './section_list.styles'
 

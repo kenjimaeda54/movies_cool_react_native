@@ -7,12 +7,14 @@ import {
   NativeSyntheticEvent,
   ScrollView,
   TextInputContentSizeChangeEventData,
+  TouchableOpacity,
   View,
 } from 'react-native'
 import InputHome from '@/screens/home/components/input_home/InputHome'
 import { MoviesResults } from '@/models/movies_model'
 import FastImage from 'react-native-fast-image'
 import { SeriesResults } from '@/models/series_model'
+import { useNavigation } from '@react-navigation/native'
 
 export function FooterComponent({
   showComponent,
@@ -27,13 +29,18 @@ export function FooterComponent({
   )
 }
 
-export const renderItemMovies = ({
+export const RenderItemMovies = ({
   item,
+  handleNavigationMovies,
 }: {
   item: MoviesResults
+  handleNavigationMovies: (item: MoviesResults) => void
 }) => {
   return (
-    <>
+    <TouchableOpacity
+      testID={Contants.testIdTouchAbleOpacityRenderItemMovies}
+      onPress={() => handleNavigationMovies(item)}
+      style={{ flex: 1 }}>
       <Styles.imageItem
         testID={Contants.testIdImageMoviesHome}
         source={{
@@ -48,17 +55,22 @@ export const renderItemMovies = ({
       <Styles.textItem numberOfLines={1}>
         {item.original_title}
       </Styles.textItem>
-    </>
+    </TouchableOpacity>
   )
 }
 
-export const renderItemSeries = ({
+export const RenderItemSeries = ({
   item,
+  handleNavigationSeries,
 }: {
   item: SeriesResults
+  handleNavigationSeries: (item: SeriesResults) => void
 }) => {
   return (
-    <>
+    <TouchableOpacity
+      testID={Contants.testIdTouchAbleOpacityRenderItemSeries}
+      onPress={() => handleNavigationSeries(item)}
+      style={{ flex: 1 }}>
       <Styles.imageItem
         testID={Contants.testIdImageSeriesHome}
         source={{
@@ -71,7 +83,7 @@ export const renderItemSeries = ({
       />
       {/*overflow usa numberOfline*/}
       <Styles.textItem numberOfLines={1}>{item.name}</Styles.textItem>
-    </>
+    </TouchableOpacity>
   )
 }
 
@@ -88,6 +100,8 @@ export default function HomeScreen() {
     handleHeightInput,
     setSearchMovieOrSerie,
     inputHeight,
+    handleNavigationMovies,
+    handleNavigationSeries,
   } = useHomeViewModel()
 
   return (
@@ -118,7 +132,12 @@ export default function HomeScreen() {
             isSuccess={isSucessSeries}
             testID={Contants.testIdSectionListSeriesMovies}
             titleSection='Series'
-            renderDetails={renderItemSeries}
+            renderDetails={({ item }) => (
+              <RenderItemSeries
+                item={item}
+                handleNavigationSeries={handleNavigationSeries}
+              />
+            )}
             data={dataSeries.pages
               ?.map((page) => page.results)
               .flat()}
@@ -132,7 +151,12 @@ export default function HomeScreen() {
             isSuccess={isSuccessMovies}
             testID={Contants.testIdSectionListSeriesMovies}
             titleSection='Movies'
-            renderDetails={renderItemMovies}
+            renderDetails={({ item }) => (
+              <RenderItemMovies
+                item={item}
+                handleNavigationMovies={handleNavigationMovies}
+              />
+            )}
             data={dataMovies.pages
               ?.map((page) => page.results)
               .flat()}

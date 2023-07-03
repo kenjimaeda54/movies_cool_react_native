@@ -6,6 +6,7 @@
  */
 
 import { ThemeProvider } from 'styled-components/native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import theme from '@/themes/theme'
 import { NavigationContainer } from '@react-navigation/native'
 import RoutesApp from '@/routes/RoutesApp'
@@ -18,7 +19,9 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
         <NavigationContainer>
-          <RoutesApp />
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <RoutesApp />
+          </GestureHandlerRootView>
         </NavigationContainer>
       </QueryClientProvider>
     </ThemeProvider>
