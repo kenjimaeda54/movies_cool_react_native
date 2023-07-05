@@ -6,7 +6,7 @@ interface IVieOffeset {
 
 export const viewInput = styled.View`
   position: relative;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   justify-content: center;
 `
 

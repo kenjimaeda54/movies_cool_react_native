@@ -15,6 +15,7 @@ import { MoviesResults } from '@/models/movies_model'
 import FastImage from 'react-native-fast-image'
 import { SeriesResults } from '@/models/series_model'
 import { SharedElement } from 'react-navigation-shared-element'
+import ButtonSearchMoviesSeries from '@/components/button_search_movie_series/ButtonSearchMoviesSeries'
 
 export function FooterComponent({
   showComponent,
@@ -108,6 +109,8 @@ export default function HomeScreen() {
     inputHeight,
     handleNavigationMovies,
     handleNavigationSeries,
+    typeSearchSelected,
+    handleTypeSearchSelected,
   } = useHomeViewModel()
 
   return (
@@ -125,6 +128,7 @@ export default function HomeScreen() {
               uri: 'https://images.unsplash.com/photo-1473830394358-91588751b241?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=400&q=60',
             }}
           />
+
           <InputHome
             height={inputHeight}
             accessibilityRole='search'
@@ -132,8 +136,21 @@ export default function HomeScreen() {
               e: NativeSyntheticEvent<TextInputContentSizeChangeEventData>
             ) => handleHeightInput(e.nativeEvent.contentSize.height)}
             onChangeText={setSearchMovieOrSerie}
-            placeholder='Pesquise series ou filmes'
+            placeholder={`Pesquise por ${typeSearchSelected}`}
           />
+          <Styles.containerButtonSearch>
+            <ButtonSearchMoviesSeries
+              isSelected={typeSearchSelected === 'filmes'}
+              textButton='Filmes'
+              onPress={() => handleTypeSearchSelected('filmes')}
+            />
+            <View style={{ marginHorizontal: 10 }} />
+            <ButtonSearchMoviesSeries
+              isSelected={typeSearchSelected === 'series'}
+              textButton='Series'
+              onPress={() => handleTypeSearchSelected('series')}
+            />
+          </Styles.containerButtonSearch>
           <SectionList
             isSuccess={isSucessSeries}
             testID={Contants.testIdSectionListSeriesMovies}

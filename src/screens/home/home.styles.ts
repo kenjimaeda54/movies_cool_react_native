@@ -16,6 +16,11 @@ export const imgTop = styled.Image`
   border-radius: 20px;
 `
 
+export const containerButtonSearch = styled.View`
+  flex-direction: row;
+  margin-bottom: 30px;
+`
+
 export const body = styled.View`
   padding: 20px 25px;
   height: 100%;

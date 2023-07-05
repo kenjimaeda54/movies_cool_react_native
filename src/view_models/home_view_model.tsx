@@ -27,6 +27,8 @@ export interface IHomeViewModel extends Omit<Clients, OmitValues> {
   searchMovieOrSerie: string
   handleNavigationMovies: (item: MoviesResults, title: string) => void
   handleNavigationSeries: (item: SeriesResults, title: string) => void
+  typeSearchSelected: string
+  handleTypeSearchSelected: (type: string) => void
 }
 
 type Clients = IUseSeriesClient & IUseMoviesClient
@@ -50,6 +52,11 @@ export default function useHomeViewModel(): IHomeViewModel {
 
   const [inputHeight, setInputHeight] = useState(20)
   const [searchMovieOrSerie, setSearchMovieOrSerie] = useState('')
+  const [typeSearchSelected, setTypeSearchSelected] =
+    useState('filmes')
+
+
+  const handleTypeSearchSelected = (type: string) => setTypeSearchSelected(type)
 
   const handleNavigationMovies = (
     item: MoviesResults,
@@ -79,5 +86,8 @@ export default function useHomeViewModel(): IHomeViewModel {
     isSucessSeries,
     handleNavigationMovies,
     handleNavigationSeries,
+    setTypeSearchSelected,
+    typeSearchSelected,
+    handleTypeSearchSelected
   }
 }
