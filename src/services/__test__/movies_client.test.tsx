@@ -6,6 +6,7 @@ import { ReactNode } from 'react'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from '../query_client'
 import { Contants } from '@/utils/contants'
+import {API_TOKEN} from "@env"
 
 //https://tanstack.com/query/v4/docs/react/guides/testing
 describe('SeriesClient', () => {
@@ -18,8 +19,8 @@ describe('SeriesClient', () => {
   beforeAll(() => {
     nock(Contants.baseURLApi, {
       reqheaders: {
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzNjAzYmY5NWYyYzA4ZmVlYmIxMWIzYjZmYmMxZTRkOCIsInN1YiI6IjY0ODlhZmY1OTkyNTljMDBlMmY3NjE5ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.26KU_696lSCwm-Giq2c7Yo5FqC8tRCZQlioZ8iKx1uM',
+        Authorization:API_TOKEN
+          
       },
     }).get(
       `/discover/movie?include_adult=false&include_null_first_air_dates=false&language=pt-BR&page=1&sort_by=popularity.desc`

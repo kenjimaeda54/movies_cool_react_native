@@ -3,6 +3,12 @@ module.exports = {
 
   plugins: [
     [
+      'module:react-native-dotenv',
+      {
+        safe: true,
+      },
+    ],
+    [
       'module-resolver',
       {
         root: '.',
