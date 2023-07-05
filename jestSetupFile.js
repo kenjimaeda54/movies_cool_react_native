@@ -4,7 +4,7 @@ export const mockNavigate = jest.fn()
 export const mockBackNavigate = jest.fn()
 
 //ao mocar esse item ira aparecer em qualquer tela que eu precisar receber parametro via rota
-const itemWithOverView = {
+export const itemWithOverView = {
   adult: false,
   backdrop_path: '/fhquRW28vRZHr26orSaFFnhYIA0.jpg',
   genre_ids: [28, 53],

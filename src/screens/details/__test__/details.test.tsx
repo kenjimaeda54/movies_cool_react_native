@@ -1,8 +1,11 @@
 import DetailsScreen, {
+  IParamList,
   returnOverview,
 } from '@/screens/details/Details'
 import { Contants } from '@/utils/contants'
 import { act, fireEvent, render } from '@/utils/test-utils'
+import { RouteProp, useRoute } from '@react-navigation/native'
+import { renderHook } from '@testing-library/react-hooks'
 import { mockBackNavigate } from 'jestSetupFile'
 
 describe('DetailsScreen', () => {
@@ -44,5 +47,12 @@ describe('DetailsScreen', () => {
     expect(mockOverview()).toBe(
       'Não existe uma descrição para esta serie ou filme'
     )
+  })
+
+  it('should return an array with the correct shared element', () => {
+    const { result } = renderHook(() => useRoute())
+    const sharedElement = DetailsScreen.sharedElements(result.current)
+    const { item } = result.current.params as IParamList
+    expect(sharedElement).toEqual([{ id: `${item.id}.photo` }])
   })
 })

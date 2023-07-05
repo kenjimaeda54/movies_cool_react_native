@@ -14,7 +14,7 @@ import Evillcons from 'react-native-vector-icons/EvilIcons'
 import FastImage from 'react-native-fast-image'
 import useDetailsViewModel from '@/view_models/details_view_model'
 
-type IParamList = {
+export type IParamList = {
   item: MoviesResults | SeriesResults
   title: string
 }
