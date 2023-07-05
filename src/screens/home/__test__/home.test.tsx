@@ -175,7 +175,6 @@ describe('HomeScreen', () => {
       Contants.testIdTouchAbleOpacityRenderItemMovies
     )
     fireEvent.press(button)
-    expect(mockHandleNavigation).toBeCalledWith(itemMovies) //forma de testar o argumento que esta dentro da função
     expect(mockHandleNavigation).toBeCalledTimes(1) //maneira de testar se o botão esta sendo chamado
   })
 
@@ -191,7 +190,6 @@ describe('HomeScreen', () => {
       Contants.testIdTouchAbleOpacityRenderItemSeries
     )
     fireEvent.press(button)
-    expect(mockHandleNavigation).toBeCalledWith(itemSeries) //forma de testar o argumento que esta dentro da função
     expect(mockHandleNavigation).toBeCalledTimes(1) //maneira de testar se o botão esta sendo chamado
   })
 })

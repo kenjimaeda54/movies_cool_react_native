@@ -14,7 +14,7 @@ import InputHome from '@/screens/home/components/input_home/InputHome'
 import { MoviesResults } from '@/models/movies_model'
 import FastImage from 'react-native-fast-image'
 import { SeriesResults } from '@/models/series_model'
-import { useNavigation } from '@react-navigation/native'
+import { SharedElement } from 'react-navigation-shared-element'
 
 export function FooterComponent({
   showComponent,
@@ -34,23 +34,27 @@ export const RenderItemMovies = ({
   handleNavigationMovies,
 }: {
   item: MoviesResults
-  handleNavigationMovies: (item: MoviesResults) => void
+  handleNavigationMovies: (item: MoviesResults, title: string) => void
 }) => {
   return (
     <TouchableOpacity
       testID={Contants.testIdTouchAbleOpacityRenderItemMovies}
-      onPress={() => handleNavigationMovies(item)}
+      onPress={() =>
+        handleNavigationMovies(item, item.original_title)
+      }
       style={{ flex: 1 }}>
-      <Styles.imageItem
-        testID={Contants.testIdImageMoviesHome}
-        source={{
-          uri: `${Contants.baseUrlImage}/${item.backdrop_path}`,
-          priority: FastImage.priority.high,
-          cache: 'immutable',
-        }}
-        resizeMode={FastImage.resizeMode.cover}
-        defaultSource={require('assets/images/image_not_found.png')}
-      />
+      <SharedElement style={{ flex: 1 }} id={`${item.id}.photo`}>
+        <Styles.imageItem
+          testID={Contants.testIdImageMoviesHome}
+          source={{
+            uri: `${Contants.baseUrlImage}/${item.backdrop_path}`,
+            priority: FastImage.priority.high,
+            cache: 'immutable',
+          }}
+          resizeMode={FastImage.resizeMode.cover}
+          defaultSource={require('assets/images/image_not_found.png')}
+        />
+      </SharedElement>
       {/*overflow usa numberOfline*/}
       <Styles.textItem numberOfLines={1}>
         {item.original_title}
@@ -64,23 +68,25 @@ export const RenderItemSeries = ({
   handleNavigationSeries,
 }: {
   item: SeriesResults
-  handleNavigationSeries: (item: SeriesResults) => void
+  handleNavigationSeries: (item: SeriesResults, title: string) => void
 }) => {
   return (
     <TouchableOpacity
       testID={Contants.testIdTouchAbleOpacityRenderItemSeries}
-      onPress={() => handleNavigationSeries(item)}
+      onPress={() => handleNavigationSeries(item, item.name)}
       style={{ flex: 1 }}>
-      <Styles.imageItem
-        testID={Contants.testIdImageSeriesHome}
-        source={{
-          uri: `${Contants.baseUrlImage}/${item.backdrop_path}`,
-          priority: FastImage.priority.high,
-          cache: 'immutable',
-        }}
-        resizeMode={FastImage.resizeMode.cover}
-        defaultSource={require('assets/images/image_not_found.png')}
-      />
+      <SharedElement style={{ flex: 1 }} id={`${item.id}.photo`}>
+        <Styles.imageItem
+          testID={Contants.testIdImageSeriesHome}
+          source={{
+            uri: `${Contants.baseUrlImage}/${item.backdrop_path}`,
+            priority: FastImage.priority.high,
+            cache: 'immutable',
+          }}
+          resizeMode={FastImage.resizeMode.cover}
+          defaultSource={require('assets/images/image_not_found.png')}
+        />
+      </SharedElement>
       {/*overflow usa numberOfline*/}
       <Styles.textItem numberOfLines={1}>{item.name}</Styles.textItem>
     </TouchableOpacity>

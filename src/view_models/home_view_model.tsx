@@ -25,8 +25,8 @@ export interface IHomeViewModel extends Omit<Clients, OmitValues> {
   inputHeight: number
   setSearchMovieOrSerie: (search: string) => void
   searchMovieOrSerie: string
-  handleNavigationMovies: (item: MoviesResults) => void
-  handleNavigationSeries: (item: SeriesResults) => void
+  handleNavigationMovies: (item: MoviesResults, title: string) => void
+  handleNavigationSeries: (item: SeriesResults, title: string) => void
 }
 
 type Clients = IUseSeriesClient & IUseMoviesClient
@@ -51,11 +51,15 @@ export default function useHomeViewModel(): IHomeViewModel {
   const [inputHeight, setInputHeight] = useState(20)
   const [searchMovieOrSerie, setSearchMovieOrSerie] = useState('')
 
-  const handleNavigationMovies = (item: MoviesResults) =>
-    navigate('details', { item })
+  const handleNavigationMovies = (
+    item: MoviesResults,
+    title: string
+  ) => navigate('details', { item, title })
 
-  const handleNavigationSeries = (item: SeriesResults) =>
-    navigate('details', { item })
+  const handleNavigationSeries = (
+    item: SeriesResults,
+    title: string
+  ) => navigate('details', { item, title })
 
   const handleHeightInput = (height: number) =>
     setInputHeight(height + 7)

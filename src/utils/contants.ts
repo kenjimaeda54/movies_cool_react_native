@@ -23,4 +23,6 @@ export class Contants {
     'test id TouchAbleOpacity Render Item Series'
   static testIdTouchAbleOpacityRenderItemMovies =
     'test id TouchAbleOpacity Render Item Movies'
+  static testIdButtonBackScreenDetails =
+    'test id button back details screen'
 }

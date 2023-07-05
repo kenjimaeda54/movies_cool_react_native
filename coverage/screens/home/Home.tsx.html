@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/15</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>15/15</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
@@ -236,7 +236,12 @@
 <a name='L171'></a><a href='#L171'>171</a>
 <a name='L172'></a><a href='#L172'>172</a>
 <a name='L173'></a><a href='#L173'>173</a>
-<a name='L174'></a><a href='#L174'>174</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L174'></a><a href='#L174'>174</a>
+<a name='L175'></a><a href='#L175'>175</a>
+<a name='L176'></a><a href='#L176'>176</a>
+<a name='L177'></a><a href='#L177'>177</a>
+<a name='L178'></a><a href='#L178'>178</a>
+<a name='L179'></a><a href='#L179'>179</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -277,7 +282,11 @@
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -340,7 +349,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
@@ -425,7 +435,7 @@ import InputHome from '@/screens/home/components/input_home/InputHome'
 import { MoviesResults } from '@/models/movies_model'
 import FastImage from 'react-native-fast-image'
 import { SeriesResults } from '@/models/series_model'
-import { useNavigation } from '@react-navigation/native'
+import { SharedElement } from 'react-navigation-shared-element'
 &nbsp;
 export function FooterComponent({
   showComponent,
@@ -445,23 +455,27 @@ export const RenderItemMovies = ({
   handleNavigationMovies,
 }: {
   item: MoviesResults
-  handleNavigationMovies: (item: MoviesResults) =&gt; void
+  handleNavigationMovies: (item: MoviesResults, title: string) =&gt; void
 }) =&gt; {
   return (
     &lt;TouchableOpacity
       testID={Contants.testIdTouchAbleOpacityRenderItemMovies}
-      onPress={() =&gt; handleNavigationMovies(item)}
+      onPress={() =&gt;
+        handleNavigationMovies(item, item.original_title)
+      }
       style={{ flex: 1 }}&gt;
-      &lt;Styles.imageItem
-        testID={Contants.testIdImageMoviesHome}
-        source={{
-          uri: `${Contants.baseUrlImage}/${item.backdrop_path}`,
-          priority: FastImage.priority.high,
-          cache: 'immutable',
-        }}
-        resizeMode={FastImage.resizeMode.cover}
-        defaultSource={require('assets/images/image_not_found.png')}
-      /&gt;
+      &lt;SharedElement style={{ flex: 1 }} id={`${item.id}.photo`}&gt;
+        &lt;Styles.imageItem
+          testID={Contants.testIdImageMoviesHome}
+          source={{
+            uri: `${Contants.baseUrlImage}/${item.backdrop_path}`,
+            priority: FastImage.priority.high,
+            cache: 'immutable',
+          }}
+          resizeMode={FastImage.resizeMode.cover}
+          defaultSource={require('assets/images/image_not_found.png')}
+        /&gt;
+      &lt;/SharedElement&gt;
       {/*overflow usa numberOfline*/}
       &lt;Styles.textItem numberOfLines={1}&gt;
         {item.original_title}
@@ -475,23 +489,25 @@ export const RenderItemSeries = ({
   handleNavigationSeries,
 }: {
   item: SeriesResults
-  handleNavigationSeries: (item: SeriesResults) =&gt; void
+  handleNavigationSeries: (item: SeriesResults, title: string) =&gt; void
 }) =&gt; {
   return (
     &lt;TouchableOpacity
       testID={Contants.testIdTouchAbleOpacityRenderItemSeries}
-      onPress={() =&gt; handleNavigationSeries(item)}
+      onPress={() =&gt; handleNavigationSeries(item, item.name)}
       style={{ flex: 1 }}&gt;
-      &lt;Styles.imageItem
-        testID={Contants.testIdImageSeriesHome}
-        source={{
-          uri: `${Contants.baseUrlImage}/${item.backdrop_path}`,
-          priority: FastImage.priority.high,
-          cache: 'immutable',
-        }}
-        resizeMode={FastImage.resizeMode.cover}
-        defaultSource={require('assets/images/image_not_found.png')}
-      /&gt;
+      &lt;SharedElement style={{ flex: 1 }} id={`${item.id}.photo`}&gt;
+        &lt;Styles.imageItem
+          testID={Contants.testIdImageSeriesHome}
+          source={{
+            uri: `${Contants.baseUrlImage}/${item.backdrop_path}`,
+            priority: FastImage.priority.high,
+            cache: 'immutable',
+          }}
+          resizeMode={FastImage.resizeMode.cover}
+          defaultSource={require('assets/images/image_not_found.png')}
+        /&gt;
+      &lt;/SharedElement&gt;
       {/*overflow usa numberOfline*/}
       &lt;Styles.textItem numberOfLines={1}&gt;{item.name}&lt;/Styles.textItem&gt;
     &lt;/TouchableOpacity&gt;
@@ -514,7 +530,6 @@ export default function HomeScreen() {
     handleNavigationMovies,
     handleNavigationSeries,
   } = useHomeViewModel()
-  const { navigate } = useNavigation()
 &nbsp;
   return (
     &lt;Styles.container&gt;
@@ -589,7 +604,7 @@ export default function HomeScreen() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-07-03T12:44:06.332Z
+                at 2023-07-05T00:26:22.254Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
