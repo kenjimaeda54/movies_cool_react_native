@@ -14,8 +14,18 @@ import { MoviesResults } from '@/models/movies_model'
 import useHomeViewModel from '@/view_models/home_view_model'
 import { act } from 'react-test-renderer'
 import { mockNavigate } from 'jestSetupFile'
+import ButtonSearchMoviesSeries from '@/components/button_search_movie_series/ButtonSearchMoviesSeries'
+import { ReactNode } from 'react'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from '@/services/query_client'
 
 describe('HomeScreen', () => {
+  const wrapper = ({ children }: { children: ReactNode }) => (
+    <QueryClientProvider client={queryClient}>
+      {children}
+    </QueryClientProvider>
+  )
+
   const mockEventContentSize = {
     nativeEvent: { contentSize: { height: 50 } },
   }
@@ -115,6 +125,30 @@ describe('HomeScreen', () => {
     fireEvent(element, 'layout', mockEventLayout)
     expect(getByText('Series 1')).toBeTruthy()
     expect(getByText('Series 110')).toBeTruthy()
+  })
+
+  it('should select series when click series button', () => {
+    const { result } = renderHook(() => useHomeViewModel(), {
+      wrapper,
+    })
+
+    act(() => {
+      result.current.handleSearchTypeSeries()
+    })
+
+    expect(result.current.typeSearchSelected).toBe('series')
+  })
+
+  it('should select movies when click movies button', () => {
+    const { result } = renderHook(() => useHomeViewModel(), {
+      wrapper,
+    })
+
+    act(() => {
+      result.current.handleSearchTypeMovie()
+    })
+
+    expect(result.current.typeSearchSelected).toBe('filmes')
   })
 
   it('should render  children on FooterComponent when isFetchingSeries is true', () => {

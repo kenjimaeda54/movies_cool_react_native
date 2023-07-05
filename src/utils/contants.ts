@@ -25,4 +25,6 @@ export class Contants {
     'test id TouchAbleOpacity Render Item Movies'
   static testIdButtonBackScreenDetails =
     'test id button back details screen'
+  static testIdButtonSelectedSearchMovie =
+    'test id button selected search movie'
 }

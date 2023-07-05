@@ -110,7 +110,8 @@ export default function HomeScreen() {
     handleNavigationMovies,
     handleNavigationSeries,
     typeSearchSelected,
-    handleTypeSearchSelected,
+    handleSearchTypeMovie,
+    handleSearchTypeSeries,
   } = useHomeViewModel()
 
   return (
@@ -142,13 +143,13 @@ export default function HomeScreen() {
             <ButtonSearchMoviesSeries
               isSelected={typeSearchSelected === 'filmes'}
               textButton='Filmes'
-              onPress={() => handleTypeSearchSelected('filmes')}
+              onPress={handleSearchTypeMovie}
             />
             <View style={{ marginHorizontal: 10 }} />
             <ButtonSearchMoviesSeries
               isSelected={typeSearchSelected === 'series'}
               textButton='Series'
-              onPress={() => handleTypeSearchSelected('series')}
+              onPress={handleSearchTypeSeries}
             />
           </Styles.containerButtonSearch>
           <SectionList
