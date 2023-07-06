@@ -60,3 +60,41 @@ export const textItem = styled.Text`
   color: ${({ theme }) => theme.color.grayLight};
   font-size: 21px;
 `
+
+export const wrapTitleGenericMovieSeries = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.bold};
+  color: ${({ theme }) => theme.color.grayLight};
+  line-height: 30px;
+  font-size: 25px;
+  letter-spacing: 1.1px;
+`
+
+export const containerItemSearchMovieSeries = styled.View`
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0px;
+`
+
+export const titleMovieSerie = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.bold};
+  color: ${({ theme }) => theme.color.grayLight};
+  line-height: 23px;
+  font-size: 20px;
+  letter-spacing: 1.1px;
+  margin: 10px 0px;
+  align-self: flex-start;
+`
+
+export const imageItemCover = styled(FastImage)`
+  width: 100%;
+  height: 250px;
+  border-radius: 10px;
+`
+export const overviewMovieSerie = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.light};
+  color: ${({ theme }) => theme.color.grayLight};
+  line-height: 23px;
+  font-size: 17px;
+  letter-spacing: 1.1px;
+`

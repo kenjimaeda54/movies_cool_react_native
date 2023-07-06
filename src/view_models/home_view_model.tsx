@@ -1,4 +1,5 @@
 import { mockSeries } from '@/mock/mock_data'
+import { GenericMovieSeriesModel } from '@/models/generic_movie_series_model'
 import { MoviesResults } from '@/models/movies_model'
 import { SeriesResults } from '@/models/series_model'
 import useMoviesClient, {
@@ -8,7 +9,7 @@ import useSeriesClient, {
   IUseSeriesClient,
 } from '@/services/series_client'
 import { useNavigation } from '@react-navigation/native'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTheme } from 'styled-components/native'
 
 type OmitValues =
@@ -23,13 +24,20 @@ type OmitValues =
 export interface IHomeViewModel extends Omit<Clients, OmitValues> {
   handleHeightInput: (height: number) => void
   inputHeight: number
-  setSearchMovieOrSerie: (search: string) => void
-  searchMovieOrSerie: string
   handleNavigationMovies: (item: MoviesResults, title: string) => void
   handleNavigationSeries: (item: SeriesResults, title: string) => void
-  typeSearchSelected: string
   handleSearchTypeMovie: () => void
   handleSearchTypeSeries: () => void
+  genericMovieSeries: GenericMovieSeriesModel[]
+  returnCapitalize: (value: string) => string
+  typeSearchApi: ISearchMoviesSeries
+  handleOnChangeTextSearchMoviesSeries: (value: string) => void
+}
+
+interface ISearchMoviesSeries {
+  typeSearchSelected: string
+  typeSearchApi: string
+  value: string
 }
 
 type Clients = IUseSeriesClient & IUseMoviesClient
@@ -52,12 +60,44 @@ export default function useHomeViewModel(): IHomeViewModel {
   const { navigate } = useNavigation()
 
   const [inputHeight, setInputHeight] = useState(20)
-  const [searchMovieOrSerie, setSearchMovieOrSerie] = useState('')
-  const [typeSearchSelected, setTypeSearchSelected] =
-    useState('filmes')
+  const [typeSearchApi, setTypeSearchApi] =
+    useState<ISearchMoviesSeries>({
+      typeSearchApi: '',
+      value: '',
+      typeSearchSelected: 'filmes',
+    } as ISearchMoviesSeries)
+  const [genericMovieSeries, setGenericMovieSeries] = useState<
+    GenericMovieSeriesModel[]
+  >([])
 
-  const handleSearchTypeMovie = () => setTypeSearchSelected('filmes')
-  const handleSearchTypeSeries = () => setTypeSearchSelected('series')
+  useEffect(() => {
+    const genericMoviesSeries: GenericMovieSeriesModel[] =
+      mockSeries.results.map((it) => {
+        return {
+          title: it.original_name,
+          photo: it.backdrop_path,
+          overview: it.overview,
+        }
+      })
+    setGenericMovieSeries(genericMoviesSeries)
+  }, [])
+
+  const handleSearchTypeMovie = () =>
+    setTypeSearchApi({
+      typeSearchApi: '',
+      typeSearchSelected: 'filmes',
+      value: '',
+    })
+
+  const handleSearchTypeSeries = () =>
+    setTypeSearchApi({
+      typeSearchApi: '',
+      typeSearchSelected: 'series',
+      value: '',
+    })
+
+  const returnCapitalize = (value: string): string =>
+    value.charAt(0).toUpperCase() + value.slice(1)
 
   const handleNavigationMovies = (
     item: MoviesResults,
@@ -72,11 +112,23 @@ export default function useHomeViewModel(): IHomeViewModel {
   const handleHeightInput = (height: number) =>
     setInputHeight(height + 7)
 
+  function handleOnChangeTextSearchMoviesSeries(value: string) {
+    setTypeSearchApi({
+      typeSearchSelected: typeSearchApi.typeSearchSelected,
+      typeSearchApi: typeSearchApi.typeSearchSelected,
+      value,
+    })
+
+    if (
+      typeSearchApi.value.length > 1 &&
+      typeSearchApi.value.length % 4 === 0
+    ) {
+    }
+  }
+
   return {
     inputHeight,
     handleHeightInput,
-    setSearchMovieOrSerie,
-    searchMovieOrSerie,
     isFetchingSeries,
     dataSeries,
     handleMoreDataSeries,
@@ -87,8 +139,11 @@ export default function useHomeViewModel(): IHomeViewModel {
     isSucessSeries,
     handleNavigationMovies,
     handleNavigationSeries,
-    typeSearchSelected,
     handleSearchTypeMovie,
     handleSearchTypeSeries,
+    genericMovieSeries,
+    returnCapitalize,
+    typeSearchApi,
+    handleOnChangeTextSearchMoviesSeries,
   }
 }

@@ -2,7 +2,7 @@ export const mockSeries = {
   page: 1,
   results: [
     {
-      backdrop_path: '/fEP2Sha3PXJnAcoGOjr5oybq44Q.jpg',
+      backdrop_path: '/azWBrlovNOOdy0eQYEe9BoiROoN.jpg',
       first_air_date: '2023-05-08',
       genre_ids: [10765, 10759],
       id: 134224,

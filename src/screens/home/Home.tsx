@@ -1,9 +1,11 @@
 import useHomeViewModel from '@/view_models/home_view_model'
+import { FlashList } from '@shopify/flash-list'
 import * as Styles from './home.styles'
 import { Contants } from '@/utils/contants'
 import SectionList from '@/components/section_list/SectionList'
 import {
   ActivityIndicator,
+  Dimensions,
   NativeSyntheticEvent,
   ScrollView,
   TextInputContentSizeChangeEventData,
@@ -16,6 +18,8 @@ import FastImage from 'react-native-fast-image'
 import { SeriesResults } from '@/models/series_model'
 import { SharedElement } from 'react-navigation-shared-element'
 import ButtonSearchMoviesSeries from '@/components/button_search_movie_series/ButtonSearchMoviesSeries'
+import { mockSeries } from '@/mock/mock_data'
+import { GenericMovieSeriesModel } from '@/models/generic_movie_series_model'
 
 export function FooterComponent({
   showComponent,
@@ -94,6 +98,34 @@ export const RenderItemSeries = ({
   )
 }
 
+const RenderItemSearchMovieOrSerie = ({
+  item,
+}: {
+  item: GenericMovieSeriesModel
+}) => {
+  return (
+    <Styles.containerItemSearchMovieSeries>
+      <Styles.imageItemCover
+        source={{
+          uri: `${Contants.baseUrlImage}/${item.photo}`,
+          priority: FastImage.priority.high,
+          cache: 'immutable',
+        }}
+        resizeMode={FastImage.resizeMode.cover}
+        defaultSource={require('assets/images/image_not_found.png')}
+      />
+      <Styles.titleMovieSerie>{item.title}</Styles.titleMovieSerie>
+      <Styles.overviewMovieSerie numberOfLines={3}>
+        {item.overview.length > 0
+          ? item.overview
+          : 'Não existe descrição para este filme'}
+      </Styles.overviewMovieSerie>
+    </Styles.containerItemSearchMovieSeries>
+  )
+}
+
+const { width } = Dimensions.get('screen')
+
 export default function HomeScreen() {
   const {
     dataSeries,
@@ -105,13 +137,15 @@ export default function HomeScreen() {
     isSucessSeries,
     isFetchingSeries,
     handleHeightInput,
-    setSearchMovieOrSerie,
     inputHeight,
     handleNavigationMovies,
     handleNavigationSeries,
-    typeSearchSelected,
     handleSearchTypeMovie,
     handleSearchTypeSeries,
+    genericMovieSeries,
+    returnCapitalize,
+    typeSearchApi,
+    handleOnChangeTextSearchMoviesSeries,
   } = useHomeViewModel()
 
   return (
@@ -133,62 +167,87 @@ export default function HomeScreen() {
           <InputHome
             height={inputHeight}
             accessibilityRole='search'
+            value={typeSearchApi.value}
             onContentSizeChange={(
               e: NativeSyntheticEvent<TextInputContentSizeChangeEventData>
             ) => handleHeightInput(e.nativeEvent.contentSize.height)}
-            onChangeText={setSearchMovieOrSerie}
-            placeholder={`Pesquise por ${typeSearchSelected}`}
+            onChangeText={handleOnChangeTextSearchMoviesSeries}
+            placeholder={`Pesquise por ${typeSearchApi.typeSearchSelected}`}
           />
+
           <Styles.containerButtonSearch>
             <ButtonSearchMoviesSeries
-              isSelected={typeSearchSelected === 'filmes'}
+              isSelected={
+                typeSearchApi.typeSearchSelected === 'filmes'
+              }
               textButton='Filmes'
               onPress={handleSearchTypeMovie}
             />
             <View style={{ marginHorizontal: 10 }} />
             <ButtonSearchMoviesSeries
-              isSelected={typeSearchSelected === 'series'}
+              isSelected={
+                typeSearchApi.typeSearchSelected === 'series'
+              }
               textButton='Series'
               onPress={handleSearchTypeSeries}
             />
           </Styles.containerButtonSearch>
-          <SectionList
-            isSuccess={isSucessSeries}
-            testID={Contants.testIdSectionListSeriesMovies}
-            titleSection='Series'
-            renderDetails={({ item }) => (
-              <RenderItemSeries
-                item={item}
-                handleNavigationSeries={handleNavigationSeries}
+          {typeSearchApi.value.length === 0 ? (
+            <View style={{ width }}>
+              <Styles.wrapTitleGenericMovieSeries>
+                {returnCapitalize(typeSearchApi.typeSearchSelected)}
+              </Styles.wrapTitleGenericMovieSeries>
+              <FlashList
+                data={genericMovieSeries}
+                contentContainerStyle={{
+                  paddingRight: 50,
+                }}
+                estimatedItemSize={470}
+                showsVerticalScrollIndicator={false}
+                renderItem={RenderItemSearchMovieOrSerie}
               />
-            )}
-            data={dataSeries.pages
-              ?.map((page) => page.results)
-              .flat()}
-            onEndReached={handleMoreDataSeries}
-            ListFooterComponent={
-              <FooterComponent showComponent={isFetchingMovies} />
-            }
-          />
-          <View style={{ margin: 30 }} />
-          <SectionList
-            isSuccess={isSuccessMovies}
-            testID={Contants.testIdSectionListSeriesMovies}
-            titleSection='Movies'
-            renderDetails={({ item }) => (
-              <RenderItemMovies
-                item={item}
-                handleNavigationMovies={handleNavigationMovies}
+            </View>
+          ) : (
+            <>
+              <SectionList
+                isSuccess={isSucessSeries}
+                testID={Contants.testIdSectionListSeriesMovies}
+                titleSection='Series'
+                renderDetails={({ item }) => (
+                  <RenderItemSeries
+                    item={item}
+                    handleNavigationSeries={handleNavigationSeries}
+                  />
+                )}
+                data={dataSeries.pages
+                  ?.map((page) => page.results)
+                  .flat()}
+                onEndReached={handleMoreDataSeries}
+                ListFooterComponent={
+                  <FooterComponent showComponent={isFetchingMovies} />
+                }
               />
-            )}
-            data={dataMovies.pages
-              ?.map((page) => page.results)
-              .flat()}
-            onEndReached={handleMoreDataMovies}
-            ListFooterComponent={
-              <FooterComponent showComponent={isFetchingSeries} />
-            }
-          />
+              <View style={{ margin: 30 }} />
+              <SectionList
+                isSuccess={isSuccessMovies}
+                testID={Contants.testIdSectionListSeriesMovies}
+                titleSection='Movies'
+                renderDetails={({ item }) => (
+                  <RenderItemMovies
+                    item={item}
+                    handleNavigationMovies={handleNavigationMovies}
+                  />
+                )}
+                data={dataMovies.pages
+                  ?.map((page) => page.results)
+                  .flat()}
+                onEndReached={handleMoreDataMovies}
+                ListFooterComponent={
+                  <FooterComponent showComponent={isFetchingSeries} />
+                }
+              />
+            </>
+          )}
         </Styles.body>
       </ScrollView>
     </Styles.container>
