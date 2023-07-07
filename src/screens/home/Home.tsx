@@ -20,6 +20,17 @@ import { SharedElement } from 'react-navigation-shared-element'
 import ButtonSearchMoviesSeries from '@/components/button_search_movie_series/ButtonSearchMoviesSeries'
 import { mockSeries } from '@/mock/mock_data'
 import { GenericMovieSeriesModel } from '@/models/generic_movie_series_model'
+import { returnOverview } from '@/utils/return_overview_utils'
+import { ReactNode } from 'react'
+
+const { width } = Dimensions.get('screen')
+interface IRenderSectionOrList {
+  conditional: boolean
+  children: ReactNode
+  returnCapitalize: (value: string) => string
+  titleMoviesOrSeries: string
+  genericMovieSeries: GenericMovieSeriesModel[]
+}
 
 export function FooterComponent({
   showComponent,
@@ -98,14 +109,16 @@ export const RenderItemSeries = ({
   )
 }
 
-const RenderItemSearchMovieOrSerie = ({
+export const RenderItemSearchMovieOrSerie = ({
   item,
 }: {
   item: GenericMovieSeriesModel
 }) => {
   return (
-    <Styles.containerItemSearchMovieSeries>
+    <Styles.containerItemSearchMovieSeries
+      testID={Contants.testIdItemSearchSeriesOrMovie}>
       <Styles.imageItemCover
+        testID={Contants.testIdImageItemSearchSeriesOrMovie}
         source={{
           uri: `${Contants.baseUrlImage}/${item.photo}`,
           priority: FastImage.priority.high,
@@ -116,15 +129,40 @@ const RenderItemSearchMovieOrSerie = ({
       />
       <Styles.titleMovieSerie>{item.title}</Styles.titleMovieSerie>
       <Styles.overviewMovieSerie numberOfLines={3}>
-        {item.overview.length > 0
-          ? item.overview
-          : 'Não existe descrição para este filme'}
+        {returnOverview(item.overview)}
       </Styles.overviewMovieSerie>
     </Styles.containerItemSearchMovieSeries>
   )
 }
 
-const { width } = Dimensions.get('screen')
+export function RenderSectionOrList({
+  conditional,
+  children,
+  returnCapitalize,
+  titleMoviesOrSeries,
+  genericMovieSeries,
+}: IRenderSectionOrList) {
+  return conditional ? (
+    <View
+      style={{ width: width }}
+      testID={Contants.testIdViewContainerRenderItemSearchOrMovie}>
+      <Styles.wrapTitleGenericMovieSeries>
+        {returnCapitalize(titleMoviesOrSeries)}
+      </Styles.wrapTitleGenericMovieSeries>
+      <FlashList
+        data={genericMovieSeries}
+        contentContainerStyle={{
+          paddingRight: 50,
+        }}
+        estimatedItemSize={470}
+        showsVerticalScrollIndicator={false}
+        renderItem={RenderItemSearchMovieOrSerie}
+      />
+    </View>
+  ) : (
+    children
+  )
+}
 
 export default function HomeScreen() {
   const {
@@ -192,22 +230,11 @@ export default function HomeScreen() {
               onPress={handleSearchTypeSeries}
             />
           </Styles.containerButtonSearch>
-          {typeSearchApi.value.length === 0 ? (
-            <View style={{ width }}>
-              <Styles.wrapTitleGenericMovieSeries>
-                {returnCapitalize(typeSearchApi.typeSearchSelected)}
-              </Styles.wrapTitleGenericMovieSeries>
-              <FlashList
-                data={genericMovieSeries}
-                contentContainerStyle={{
-                  paddingRight: 50,
-                }}
-                estimatedItemSize={470}
-                showsVerticalScrollIndicator={false}
-                renderItem={RenderItemSearchMovieOrSerie}
-              />
-            </View>
-          ) : (
+          <RenderSectionOrList
+            conditional={typeSearchApi.value.length > 3}
+            returnCapitalize={returnCapitalize}
+            genericMovieSeries={genericMovieSeries}
+            titleMoviesOrSeries={typeSearchApi.typeSearchApi}>
             <>
               <SectionList
                 isSuccess={isSucessSeries}
@@ -247,7 +274,7 @@ export default function HomeScreen() {
                 }
               />
             </>
-          )}
+          </RenderSectionOrList>
         </Styles.body>
       </ScrollView>
     </Styles.container>

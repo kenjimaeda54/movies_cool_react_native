@@ -27,4 +27,9 @@ export class Contants {
     'test id button back details screen'
   static testIdButtonSelectedSearchMovie =
     'test id button selected search movie'
+  static testIdItemSearchSeriesOrMovie =
+    'test id item search series or movies'
+  static testIdImageItemSearchSeriesOrMovie =
+    'test id image item search series or movie'
+  static testIdViewContainerRenderItemSearchOrMovie = 'test id view container item search series or movies'
 }

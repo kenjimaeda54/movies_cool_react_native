@@ -1,10 +1,10 @@
 import DetailsScreen, {
   IParamList,
-  returnOverview,
 } from '@/screens/details/Details'
 import { Contants } from '@/utils/contants'
-import { act, fireEvent, render } from '@/utils/test-utils'
-import { RouteProp, useRoute } from '@react-navigation/native'
+import { returnOverview } from '@/utils/return_overview_utils'
+import {   fireEvent, render } from '@/utils/test-utils'
+import {  useRoute } from '@react-navigation/native'
 import { renderHook } from '@testing-library/react-hooks'
 import { mockBackNavigate } from 'jestSetupFile'
 

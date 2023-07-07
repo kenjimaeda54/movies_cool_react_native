@@ -10,8 +10,8 @@ import useSeriesClient, {
 } from '@/services/series_client'
 import { useNavigation } from '@react-navigation/native'
 import { useEffect, useState } from 'react'
-import { useTheme } from 'styled-components/native'
 
+//esses montes de omit ocorreram porque precisava usar para test porem na vieww não ira representar
 type OmitValues =
   | 'currentPageSeries'
   | 'fetchPageSeries'
@@ -32,9 +32,10 @@ export interface IHomeViewModel extends Omit<Clients, OmitValues> {
   returnCapitalize: (value: string) => string
   typeSearchApi: ISearchMoviesSeries
   handleOnChangeTextSearchMoviesSeries: (value: string) => void
+  setTypeSearchApi: (value: ISearchMoviesSeries) => void
 }
 
-interface ISearchMoviesSeries {
+export interface ISearchMoviesSeries {
   typeSearchSelected: string
   typeSearchApi: string
   value: string
@@ -145,5 +146,6 @@ export default function useHomeViewModel(): IHomeViewModel {
     returnCapitalize,
     typeSearchApi,
     handleOnChangeTextSearchMoviesSeries,
+    setTypeSearchApi,
   }
 }

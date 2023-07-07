@@ -4,22 +4,30 @@ import { Contants } from '@/utils/contants'
 import HomeScreen, {
   FooterComponent,
   RenderItemMovies,
+  RenderItemSearchMovieOrSerie,
   RenderItemSeries,
+  RenderSectionOrList,
 } from '@/screens/home/Home'
-import { fireEvent, render } from '@/utils/test-utils'
+import { cleanup, fireEvent, render } from '@/utils/test-utils'
 import InputHome from '@/screens/home/components/input_home/InputHome'
 import SectionList from '@/components/section_list/SectionList'
 import { SeriesResults } from '@/models/series_model'
 import { MoviesResults } from '@/models/movies_model'
-import useHomeViewModel from '@/view_models/home_view_model'
+import useHomeViewModel, {
+  ISearchMoviesSeries,
+} from '@/view_models/home_view_model'
 import { act } from 'react-test-renderer'
-import { mockNavigate } from 'jestSetupFile'
-import ButtonSearchMoviesSeries from '@/components/button_search_movie_series/ButtonSearchMoviesSeries'
-import { ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from '@/services/query_client'
+import { GenericMovieSeriesModel } from '@/models/generic_movie_series_model'
+import { returnOverview } from '@/utils/return_overview_utils'
 
 describe('HomeScreen', () => {
+  afterEach(cleanup)
+  //para resolver este erro
+  //ReferenceError: You are trying to `import` a file after the Jest environment has been torn down
+
   const wrapper = ({ children }: { children: ReactNode }) => (
     <QueryClientProvider client={queryClient}>
       {children}
@@ -45,6 +53,18 @@ describe('HomeScreen', () => {
       'https://images.unsplash.com/photo-1661956602139-ec64991b8b16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=365&q=80',
     original_title: 'Fast X',
   } as MoviesResults
+
+  const itemGenerics = {
+    photo:
+      'https://images.unsplash.com/photo-1661956602139-ec64991b8b16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=365&q=80',
+    title: 'Fast X',
+  } as GenericMovieSeriesModel
+
+  const setNewTypeSearch = {
+    typeSearchApi: 'filmes',
+    typeSearchSelected: 'filmes',
+    value: 'Fastx',
+  } as ISearchMoviesSeries
 
   let dataSeries = {
     pages: [
@@ -127,6 +147,24 @@ describe('HomeScreen', () => {
     expect(getByText('Series 110')).toBeTruthy()
   })
 
+  //temos uma condicional para verificar
+  it('should view occupy all available space', () => {
+    const mockReturnCapitalize = jest.fn()
+    const { getByTestId } = render(
+      <RenderSectionOrList
+        conditional={true}
+        returnCapitalize={mockReturnCapitalize}
+        titleMoviesOrSeries={''}
+        genericMovieSeries={[]}>
+        <Text>children</Text>
+      </RenderSectionOrList>
+    )
+    const view = getByTestId(
+      Contants.testIdViewContainerRenderItemSearchOrMovie
+    )
+    expect(view).toBeDefined()
+  })
+
   it('should select series when click series button', () => {
     const { result } = renderHook(() => useHomeViewModel(), {
       wrapper,
@@ -136,7 +174,9 @@ describe('HomeScreen', () => {
       result.current.handleSearchTypeSeries()
     })
 
-    expect(result.current.typeSearchSelected).toBe('series')
+    expect(result.current.typeSearchApi.typeSearchSelected).toBe(
+      'series'
+    )
   })
 
   it('should select movies when click movies button', () => {
@@ -148,7 +188,9 @@ describe('HomeScreen', () => {
       result.current.handleSearchTypeMovie()
     })
 
-    expect(result.current.typeSearchSelected).toBe('filmes')
+    expect(result.current.typeSearchApi.typeSearchSelected).toBe(
+      'filmes'
+    )
   })
 
   it('should render  children on FooterComponent when isFetchingSeries is true', () => {
@@ -197,9 +239,45 @@ describe('HomeScreen', () => {
     expect(getByText('Simpsons')).toBeTruthy()
   })
 
+  it('should render the search item  image and title correctly', () => {
+    const { getByTestId, getByText } = render(
+      <RenderItemSearchMovieOrSerie item={itemGenerics} />
+    )
+    const imageId = getByTestId(
+      Contants.testIdImageItemSearchSeriesOrMovie
+    )
+    expect(imageId.props.source.uri).toBe(
+      `${Contants.baseUrlImage}/https://images.unsplash.com/photo-1661956602139-ec64991b8b16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=365&q=80`
+    )
+    expect(getByText('Fast X')).toBeTruthy()
+  })
+
+  it('should render the item overview   component RenderItemSearchMovieOrSerie', () => {
+    const mockOverview = jest.fn()
+    const overView =
+      'Depois de escapar da morte por um triz, o mercenário Tyler Rake encara mais uma missão perigosa: resgatar a família de um criminoso implacável.'
+    render(<RenderItemSearchMovieOrSerie item={itemGenerics} />)
+    mockOverview.mockReturnValueOnce(returnOverview(overView))
+
+    expect(mockOverview()).toBe(
+      'Depois de escapar da morte por um triz, o mercenário Tyler Rake encara mais uma missão perigosa: resgatar a família de um criminoso implacável.'
+    )
+  })
+
+  it('should return a standard message if it does not have an overview component RenderItemSearchMovieOrSerie', () => {
+    const mockOverview = jest.fn()
+    const overView = ''
+    render(<RenderItemSearchMovieOrSerie item={itemGenerics} />)
+    mockOverview.mockReturnValueOnce(returnOverview(overView))
+
+    expect(mockOverview()).toBe(
+      'Não existe uma descrição para esta serie ou filme'
+    )
+  })
+
   it('should called with itens correct when press handleNavigationMovies', () => {
     const mockHandleNavigation = jest.fn()
-    const { getByTestId, getByText } = render(
+    const { getByTestId } = render(
       <RenderItemMovies
         item={itemMovies}
         handleNavigationMovies={mockHandleNavigation}
@@ -214,7 +292,7 @@ describe('HomeScreen', () => {
 
   it('should called with itens correct when press handleNavigationSeries', () => {
     const mockHandleNavigation = jest.fn()
-    const { getByTestId, getByText } = render(
+    const { getByTestId } = render(
       <RenderItemSeries
         item={itemSeries}
         handleNavigationSeries={mockHandleNavigation}

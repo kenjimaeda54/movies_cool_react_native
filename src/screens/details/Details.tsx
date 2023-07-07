@@ -6,24 +6,21 @@ import {
   RouteProp,
   useRoute,
 } from '@react-navigation/native'
-import { Dimensions, Text, View } from 'react-native'
+import {  View } from 'react-native'
 import * as Styles from './details.styles'
 import { Contants } from '@/utils/contants'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Evillcons from 'react-native-vector-icons/EvilIcons'
 import FastImage from 'react-native-fast-image'
 import useDetailsViewModel from '@/view_models/details_view_model'
+import { returnOverview } from '@/utils/return_overview_utils'
 
 export type IParamList = {
   item: MoviesResults | SeriesResults
   title: string
 }
 
-export function returnOverview(overview: string): string {
-  return overview.length > 0
-    ? overview
-    : 'Não existe uma descrição para esta serie ou filme'
-}
+
 
 const DetailsScreen = () => {
   const route = useRoute()
