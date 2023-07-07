@@ -30,6 +30,8 @@ interface IRenderSectionOrList {
   returnCapitalize: (value: string) => string
   titleMoviesOrSeries: string
   genericMovieSeries: GenericMovieSeriesModel[]
+  isLoadingMovies: boolean
+  isLoadingSeries: boolean
 }
 
 export function FooterComponent({
@@ -141,24 +143,30 @@ export function RenderSectionOrList({
   returnCapitalize,
   titleMoviesOrSeries,
   genericMovieSeries,
+  isLoadingMovies,
+  isLoadingSeries,
 }: IRenderSectionOrList) {
   return conditional ? (
-    <View
-      style={{ width: width }}
-      testID={Contants.testIdViewContainerRenderItemSearchOrMovie}>
-      <Styles.wrapTitleGenericMovieSeries>
-        {returnCapitalize(titleMoviesOrSeries)}
-      </Styles.wrapTitleGenericMovieSeries>
-      <FlashList
-        data={genericMovieSeries}
-        contentContainerStyle={{
-          paddingRight: 50,
-        }}
-        estimatedItemSize={470}
-        showsVerticalScrollIndicator={false}
-        renderItem={RenderItemSearchMovieOrSerie}
-      />
-    </View>
+    isLoadingMovies || isLoadingSeries ? (
+      <ActivityIndicator size={20} />
+    ) : (
+      <View
+        style={{ width: width }}
+        testID={Contants.testIdViewContainerRenderItemSearchOrMovie}>
+        <Styles.wrapTitleGenericMovieSeries>
+          {returnCapitalize(titleMoviesOrSeries)}
+        </Styles.wrapTitleGenericMovieSeries>
+        <FlashList
+          data={genericMovieSeries}
+          contentContainerStyle={{
+            paddingRight: 50,
+          }}
+          estimatedItemSize={470}
+          showsVerticalScrollIndicator={false}
+          renderItem={RenderItemSearchMovieOrSerie}
+        />
+      </View>
+    )
   ) : (
     children
   )
@@ -180,11 +188,15 @@ export default function HomeScreen() {
     handleNavigationSeries,
     handleSearchTypeMovie,
     handleSearchTypeSeries,
-    genericMovieSeries,
+    dataGenericMoviesSeries,
     returnCapitalize,
     typeSearchApi,
     handleOnChangeTextSearchMoviesSeries,
+    isLoadingSearchMovies,
+    isLoadingSearchSeries,
   } = useHomeViewModel()
+
+  console.log(dataGenericMoviesSeries)
 
   return (
     <Styles.container>
@@ -231,9 +243,11 @@ export default function HomeScreen() {
             />
           </Styles.containerButtonSearch>
           <RenderSectionOrList
-            conditional={typeSearchApi.value.length > 3}
+            conditional={typeSearchApi.value?.length > 4}
             returnCapitalize={returnCapitalize}
-            genericMovieSeries={genericMovieSeries}
+            genericMovieSeries={dataGenericMoviesSeries}
+            isLoadingMovies={isLoadingSearchMovies}
+            isLoadingSeries={isLoadingSearchSeries}
             titleMoviesOrSeries={typeSearchApi.typeSearchApi}>
             <>
               <SectionList

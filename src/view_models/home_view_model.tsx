@@ -1,10 +1,12 @@
 import { mockSeries } from '@/mock/mock_data'
 import { GenericMovieSeriesModel } from '@/models/generic_movie_series_model'
-import { MoviesResults } from '@/models/movies_model'
-import { SeriesResults } from '@/models/series_model'
+import { MoviesModel, MoviesResults } from '@/models/movies_model'
+import { SeriesModel, SeriesResults } from '@/models/series_model'
 import useMoviesClient, {
   IUseMoviesClient,
 } from '@/services/movies_client'
+import useSearchMoviesClient from '@/services/search_movies_client'
+import useSearchSeriesClient from '@/services/search_series_client'
 import useSeriesClient, {
   IUseSeriesClient,
 } from '@/services/series_client'
@@ -28,11 +30,13 @@ export interface IHomeViewModel extends Omit<Clients, OmitValues> {
   handleNavigationSeries: (item: SeriesResults, title: string) => void
   handleSearchTypeMovie: () => void
   handleSearchTypeSeries: () => void
-  genericMovieSeries: GenericMovieSeriesModel[]
+  dataGenericMoviesSeries: GenericMovieSeriesModel[]
   returnCapitalize: (value: string) => string
   typeSearchApi: ISearchMoviesSeries
   handleOnChangeTextSearchMoviesSeries: (value: string) => void
   setTypeSearchApi: (value: ISearchMoviesSeries) => void
+  isLoadingSearchMovies: boolean
+  isLoadingSearchSeries: boolean
 }
 
 export interface ISearchMoviesSeries {
@@ -44,6 +48,20 @@ export interface ISearchMoviesSeries {
 type Clients = IUseSeriesClient & IUseMoviesClient
 
 export default function useHomeViewModel(): IHomeViewModel {
+  const {
+    data: dataSearchMovies,
+    setNewWord: setWordMovies,
+    isLoading: isLoadingSearchMovies,
+    refetch: refetchSearchMovies,
+  } = useSearchMoviesClient()
+
+  const {
+    data: dataSearchSeries,
+    setNewWord: setWordSeries,
+    isLoading: isLoadingSearchSeries,
+    refetch: refetchSearchSeries,
+  } = useSearchSeriesClient()
+
   const {
     isFetchingSeries,
     dataSeries,
@@ -67,21 +85,15 @@ export default function useHomeViewModel(): IHomeViewModel {
       value: '',
       typeSearchSelected: 'filmes',
     } as ISearchMoviesSeries)
-  const [genericMovieSeries, setGenericMovieSeries] = useState<
-    GenericMovieSeriesModel[]
-  >([])
+  let dataGenericMoviesSeries = [] as GenericMovieSeriesModel[]
 
-  useEffect(() => {
-    const genericMoviesSeries: GenericMovieSeriesModel[] =
-      mockSeries.results.map((it) => {
-        return {
-          title: it.original_name,
-          photo: it.backdrop_path,
-          overview: it.overview,
-        }
-      })
-    setGenericMovieSeries(genericMoviesSeries)
-  }, [])
+  if (dataSearchMovies.results?.length > 0) {
+    dataGenericMoviesSeries = returnGenericMovie(dataSearchMovies)
+  }
+
+  if (dataSearchSeries.results?.length > 0) {
+    dataGenericMoviesSeries = returnGenericSerie(dataSearchSeries)
+  }
 
   const handleSearchTypeMovie = () =>
     setTypeSearchApi({
@@ -113,6 +125,30 @@ export default function useHomeViewModel(): IHomeViewModel {
   const handleHeightInput = (height: number) =>
     setInputHeight(height + 7)
 
+  function returnGenericMovie(
+    data: MoviesModel
+  ): GenericMovieSeriesModel[] {
+    return data.results?.map((it) => {
+      return {
+        title: it.original_title,
+        overview: it.overview,
+        photo: it.backdrop_path,
+      } as GenericMovieSeriesModel
+    })
+  }
+
+  function returnGenericSerie(
+    data: SeriesModel
+  ): GenericMovieSeriesModel[] {
+    return data.results?.map((it) => {
+      return {
+        title: it.name,
+        overview: it.overview,
+        photo: it.backdrop_path,
+      } as GenericMovieSeriesModel
+    })
+  }
+
   function handleOnChangeTextSearchMoviesSeries(value: string) {
     setTypeSearchApi({
       typeSearchSelected: typeSearchApi.typeSearchSelected,
@@ -120,10 +156,14 @@ export default function useHomeViewModel(): IHomeViewModel {
       value,
     })
 
-    if (
-      typeSearchApi.value.length > 1 &&
-      typeSearchApi.value.length % 4 === 0
-    ) {
+    if (value.length > 1 && value.length % 3 === 0) {
+      if (typeSearchApi.typeSearchApi === 'filmes') {
+        setWordMovies(value)
+        refetchSearchMovies()
+      } else {
+        setWordSeries(value)
+        refetchSearchSeries()
+      }
     }
   }
 
@@ -142,10 +182,12 @@ export default function useHomeViewModel(): IHomeViewModel {
     handleNavigationSeries,
     handleSearchTypeMovie,
     handleSearchTypeSeries,
-    genericMovieSeries,
+    dataGenericMoviesSeries,
     returnCapitalize,
     typeSearchApi,
     handleOnChangeTextSearchMoviesSeries,
     setTypeSearchApi,
+    isLoadingSearchMovies,
+    isLoadingSearchSeries,
   }
 }

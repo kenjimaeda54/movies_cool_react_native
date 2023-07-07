@@ -15,7 +15,7 @@ export interface IUseMoviesClient {
   isSuccessMovies: boolean
   currentPageMovies: MutableRefObject<number>
   fetchPageMovies: (discover: MoviesModel) => void
-  fetchMovies: () => Promise<MoviesModel>
+  fetchMovies: (currentPage: number) => Promise<MoviesModel>
 }
 
 export async function fetchMovies(currentPage: number) {

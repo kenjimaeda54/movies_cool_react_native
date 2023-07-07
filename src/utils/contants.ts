@@ -31,5 +31,8 @@ export class Contants {
     'test id item search series or movies'
   static testIdImageItemSearchSeriesOrMovie =
     'test id image item search series or movie'
-  static testIdViewContainerRenderItemSearchOrMovie = 'test id view container item search series or movies'
+  static testIdViewContainerRenderItemSearchOrMovie =
+    'test id view container item search series or movies'
+  static keyReactQuerySearchMovie = 'ReactQuerySearchMovie'
+  static keyReactQuerySearchSerie = 'ReactQuerySearchSerie'
 }
