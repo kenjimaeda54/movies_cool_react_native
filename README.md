@@ -426,7 +426,7 @@ describe('SectionList', () => {
 
 
 
-` ``typescript
+```typescript
 
 // view de input dinamico
 
