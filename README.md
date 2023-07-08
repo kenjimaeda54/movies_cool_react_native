@@ -5,7 +5,7 @@ API  usado foi essa [ The Movies DB]{(https://developer.themoviedb.org/reference
 
 
 
- ([./teste project.png](https://github.com/kenjimaeda54/movies_cool_react_native/blob/d88511ca529bd6cfe95d2570e869391f70c98ed9/teste%20project.png))
+![test](teste project.png)
 ## Feature
 - Trabalhei com testes para reforçar uma deficiência minha, precisei usar [msw](https://mswjs.io/docs/) para mocar minhas requisições e [render hooks](https://react-hooks-testing-library.com/reference/api) para lidar com meus hooks customizados
 - Usei bastante hooks customizados, pois arquitetura foi MVVM, então havia camadas de useViewModel e para requisições camadas de useClient
