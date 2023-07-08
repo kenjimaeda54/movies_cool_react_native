@@ -14,7 +14,6 @@ describe('SeriesClient', () => {
     </QueryClientProvider>
   )
 
-  //TODO O MOCK ESTA SENDO REALIZADO PELO msw
   it('should perfom request on the correct url if the current page is less or equal than 5', async () => {
     const { result, waitFor } = renderHook(() => useSeriesClient(), {
       wrapper,

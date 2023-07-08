@@ -38,7 +38,7 @@ export default function useMoviesClient(): IUseMoviesClient {
 
   const {
     data: dataMovies = {} as InfiniteData<MoviesModel>,
-    hasNextPage = true, // o default precisei deixar como 4 para passar na condiçaõ do hadleMoreDateMovies
+    hasNextPage = true,
     isFetching: isFetchingMovies,
     isSuccess: isSuccessMovies,
     fetchNextPage: fetchPagesMovies,
@@ -62,8 +62,8 @@ export default function useMoviesClient(): IUseMoviesClient {
     dataMovies,
     handleMoreDataMovies,
     isSuccessMovies,
-    fetchPageMovies, //essa logica e para testes não sera usando na view
-    currentPageMovies, //essa logica e para testes não sera usando na view
-    fetchMovies, //essa logica e para testes não sera usando na view
+    fetchPageMovies,
+    currentPageMovies,
+    fetchMovies,
   }
 }

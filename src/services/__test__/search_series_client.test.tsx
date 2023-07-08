@@ -27,8 +27,7 @@ describe('SearchSeriesClient', () => {
       result.current.fetchSearchSeries('Amor Perfeito')
     })
 
-    //estou mocando o retorno da api usando msw
-    //no arquivo handles tu pode ver mesma url e o retorno do  fetchSearchMovie mocado
+
     expect(result.current.data).toEqual(mockSeries)
   })
 

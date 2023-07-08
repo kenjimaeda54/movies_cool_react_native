@@ -7,7 +7,7 @@ import { queryClient } from '../query_client'
 import { Contants } from '@/utils/contants'
 import { API_TOKEN } from '@env'
 
-//https://tanstack.com/query/v4/docs/react/guides/testing
+
 describe('SeriesClient', () => {
   const wrapper = ({ children }: { children: ReactNode }) => (
     <QueryClientProvider client={queryClient}>
