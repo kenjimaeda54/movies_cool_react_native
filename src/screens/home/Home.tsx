@@ -2,7 +2,9 @@ import useHomeViewModel from '@/view_models/home_view_model'
 import { FlashList } from '@shopify/flash-list'
 import * as Styles from './home.styles'
 import { Contants } from '@/utils/contants'
-import SectionList from '@/components/section_list/SectionList'
+import SectionList, {
+  EmptyCompoent,
+} from '@/components/section_list/SectionList'
 import {
   ActivityIndicator,
   Dimensions,
@@ -172,6 +174,7 @@ export function RenderSectionOrList({
         <FlashList
           data={genericMovieSeries}
           testID={Contants.testIdListGenericsMoviesAndSeries}
+          ListEmptyComponent={<EmptyCompoent />}
           contentContainerStyle={{
             paddingRight: 50,
           }}
@@ -265,7 +268,7 @@ export default function HomeScreen() {
           <RenderSectionOrList
             conditional={typeSearchApi.value?.length > 4}
             returnCapitalize={returnCapitalize}
-            genericMovieSeries={dataGenericMoviesSeries}
+            genericMovieSeries={dataGenericMoviesSeries.current}
             isLoadingMovies={isLoadingSearchMovies}
             isLoadingSeries={isLoadingSearchSeries}
             handleNavigationGenericMovies={

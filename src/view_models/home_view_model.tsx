@@ -1,3 +1,10 @@
+import {
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { mockSeries } from '@/mock/mock_data'
 import { GenericMovieSeriesModel } from '@/models/generic_movie_series_model'
 import { MoviesModel, MoviesResults } from '@/models/movies_model'
@@ -11,7 +18,6 @@ import useSeriesClient, {
   IUseSeriesClient,
 } from '@/services/series_client'
 import { useNavigation } from '@react-navigation/native'
-import { useEffect, useState } from 'react'
 
 //esses montes de omit ocorreram porque precisava usar para test porem na vieww não ira representar
 type OmitValues =
@@ -30,7 +36,7 @@ export interface IHomeViewModel extends Omit<Clients, OmitValues> {
   handleNavigationSeries: (item: SeriesResults, title: string) => void
   handleSearchTypeMovie: () => void
   handleSearchTypeSeries: () => void
-  dataGenericMoviesSeries: GenericMovieSeriesModel[]
+  dataGenericMoviesSeries: MutableRefObject<GenericMovieSeriesModel[]>
   returnCapitalize: (value: string) => string
   typeSearchApi: ISearchMoviesSeries
   handleOnChangeTextSearchMoviesSeries: (value: string) => void
@@ -89,14 +95,25 @@ export default function useHomeViewModel(): IHomeViewModel {
       value: '',
       typeSearchSelected: 'filmes',
     } as ISearchMoviesSeries)
-  let dataGenericMoviesSeries = [] as GenericMovieSeriesModel[]
 
-  if (dataSearchMovies.results?.length > 0) {
-    dataGenericMoviesSeries = returnGenericMovie(dataSearchMovies)
+  const dataGenericMoviesSeries = useRef(
+    [] as GenericMovieSeriesModel[]
+  )
+
+  if (
+    dataSearchMovies.results?.length > 0 &&
+    typeSearchApi.typeSearchApi === 'filmes'
+  ) {
+    dataGenericMoviesSeries.current =
+      returnGenericMovie(dataSearchMovies)
   }
 
-  if (dataSearchSeries.results?.length > 0) {
-    dataGenericMoviesSeries = returnGenericSerie(dataSearchSeries)
+  if (
+    dataSearchSeries.results?.length > 0 &&
+    typeSearchApi.typeSearchApi === 'series'
+  ) {
+    dataGenericMoviesSeries.current =
+      returnGenericSerie(dataSearchSeries)
   }
 
   const handleSearchTypeMovie = () =>
@@ -172,6 +189,10 @@ export default function useHomeViewModel(): IHomeViewModel {
       typeSearchApi: typeSearchApi.typeSearchSelected,
       value,
     })
+
+    if (value.length <= 2) {
+      dataGenericMoviesSeries.current = []
+    }
 
     if (value.length > 1 && value.length % 3 === 0) {
       if (typeSearchApi.typeSearchApi === 'filmes') {

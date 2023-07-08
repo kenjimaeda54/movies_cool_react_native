@@ -8,6 +8,7 @@ export async function fetchSearchMovie(word: string) {
   const response = await api.get(
     `/search/movie?query=${word}&include_adult=false&language=pt-BR`
   )
+
   return response.data as MoviesModel
 }
 
@@ -31,7 +32,7 @@ export default function useSearchMoviesClient(): IUseSearchMovies {
     isLoading,
     refetch,
     isSuccess,
-  } = useQuery([Contants.keyReactQuerySearchMovie], () =>
+  } = useQuery([Contants.keyReactQuerySearchMovie, word], () =>
     fetchSearchMovie(word.current)
   )
 

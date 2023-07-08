@@ -32,7 +32,7 @@ export default function useSearchSeriesClient(): IUseSearchSeries {
     isLoading,
     refetch,
     isSuccess,
-  } = useQuery([Contants.keyReactQuerySearchSerie], () =>
+  } = useQuery([Contants.keyReactQuerySearchSerie, word], () =>
     fetchSearchSeries(word.current)
   )
 
