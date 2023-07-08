@@ -1,14 +1,11 @@
-import nock from 'nock'
 import { mockSeries } from '@/mock/mock_data'
 import { renderHook } from '@testing-library/react-hooks'
-import useMoviesClient from '../movies_client'
 import { ReactNode } from 'react'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from '../query_client'
 import { act } from 'react-test-renderer'
 import useSeriesClient, { fetchSeries } from '../series_client'
-import { Contants } from '@/utils/contants'
-import { API_TOKEN } from '@env'
+ 
 
 describe('SeriesClient', () => {
   const wrapper = ({ children }: { children: ReactNode }) => (
@@ -17,16 +14,7 @@ describe('SeriesClient', () => {
     </QueryClientProvider>
   )
 
-  beforeAll(() => {
-    nock(Contants.baseURLApi, {
-      reqheaders: {
-        Authorization: API_TOKEN,
-      },
-    }).get(
-      `/discover/tv?include_adult=false&include_null_first_air_dates=false&language=pt-BR&page=1&sort_by=popularity.desc`
-    )
-  })
-
+  //TODO O MOCK ESTA SENDO REALIZADO PELO msw
   it('should perfom request on the correct url if the current page is less or equal than 5', async () => {
     const { result, waitFor } = renderHook(() => useSeriesClient(), {
       wrapper,

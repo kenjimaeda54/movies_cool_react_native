@@ -35,4 +35,6 @@ export class Contants {
     'test id view container item search series or movies'
   static keyReactQuerySearchMovie = 'ReactQuerySearchMovie'
   static keyReactQuerySearchSerie = 'ReactQuerySearchSerie'
+  static testIdLoadingIndicatorComponentListSearch = "test id loading indicator component list search"
+  static testIdListGenericsMoviesAndSeries = "test id list generics movies and series"
 }

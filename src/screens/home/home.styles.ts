@@ -69,7 +69,7 @@ export const wrapTitleGenericMovieSeries = styled.Text`
   letter-spacing: 1.1px;
 `
 
-export const containerItemSearchMovieSeries = styled.View`
+export const containerItemSearchMovieSeries = styled.TouchableOpacity`
   width: 100%;
   justify-content: center;
   align-items: center;

@@ -2,11 +2,11 @@ import api from './api'
 import { MoviesModel } from '@/models/movies_model'
 import { useQuery } from '@tanstack/react-query'
 import { Contants } from '@/utils/contants'
-import { useRef, useState } from 'react'
+import { MutableRefObject, useRef, useState } from 'react'
 
 export async function fetchSearchMovie(word: string) {
   const response = await api.get(
-    `https://api.themoviedb.org/3/search/movie?query=${word}&include_adult=false&language=pt-BR`
+    `/search/movie?query=${word}&include_adult=false&language=pt-BR`
   )
   return response.data as MoviesModel
 }
@@ -16,6 +16,9 @@ interface IUseSearchMovies {
   data: MoviesModel
   isLoading: boolean
   refetch: () => void
+  fetchSearchMovie: (word: string) => Promise<MoviesModel>
+  isSuccess: boolean
+  word: MutableRefObject<string>
 }
 
 export default function useSearchMoviesClient(): IUseSearchMovies {
@@ -27,6 +30,7 @@ export default function useSearchMoviesClient(): IUseSearchMovies {
     data = {} as MoviesModel,
     isLoading,
     refetch,
+    isSuccess,
   } = useQuery([Contants.keyReactQuerySearchMovie], () =>
     fetchSearchMovie(word.current)
   )
@@ -36,5 +40,8 @@ export default function useSearchMoviesClient(): IUseSearchMovies {
     setNewWord,
     isLoading,
     refetch,
+    fetchSearchMovie,
+    isSuccess,
+    word,
   }
 }

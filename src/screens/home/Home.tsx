@@ -18,7 +18,6 @@ import FastImage from 'react-native-fast-image'
 import { SeriesResults } from '@/models/series_model'
 import { SharedElement } from 'react-navigation-shared-element'
 import ButtonSearchMoviesSeries from '@/components/button_search_movie_series/ButtonSearchMoviesSeries'
-import { mockSeries } from '@/mock/mock_data'
 import { GenericMovieSeriesModel } from '@/models/generic_movie_series_model'
 import { returnOverview } from '@/utils/return_overview_utils'
 import { ReactNode } from 'react'
@@ -32,6 +31,10 @@ interface IRenderSectionOrList {
   genericMovieSeries: GenericMovieSeriesModel[]
   isLoadingMovies: boolean
   isLoadingSeries: boolean
+  handleNavigationGenericMovies: (
+    item: GenericMovieSeriesModel,
+    title: string
+  ) => void
 }
 
 export function FooterComponent({
@@ -113,11 +116,17 @@ export const RenderItemSeries = ({
 
 export const RenderItemSearchMovieOrSerie = ({
   item,
+  handleNavigationGenericMovies,
 }: {
   item: GenericMovieSeriesModel
+  handleNavigationGenericMovies: (
+    item: GenericMovieSeriesModel,
+    title: string
+  ) => void
 }) => {
   return (
     <Styles.containerItemSearchMovieSeries
+      onPress={() => handleNavigationGenericMovies(item, item.title)}
       testID={Contants.testIdItemSearchSeriesOrMovie}>
       <Styles.imageItemCover
         testID={Contants.testIdImageItemSearchSeriesOrMovie}
@@ -145,10 +154,14 @@ export function RenderSectionOrList({
   genericMovieSeries,
   isLoadingMovies,
   isLoadingSeries,
+  handleNavigationGenericMovies,
 }: IRenderSectionOrList) {
   return conditional ? (
     isLoadingMovies || isLoadingSeries ? (
-      <ActivityIndicator size={20} />
+      <ActivityIndicator
+        testID={Contants.testIdLoadingIndicatorComponentListSearch}
+        size={20}
+      />
     ) : (
       <View
         style={{ width: width }}
@@ -158,12 +171,20 @@ export function RenderSectionOrList({
         </Styles.wrapTitleGenericMovieSeries>
         <FlashList
           data={genericMovieSeries}
+          testID={Contants.testIdListGenericsMoviesAndSeries}
           contentContainerStyle={{
             paddingRight: 50,
           }}
           estimatedItemSize={470}
           showsVerticalScrollIndicator={false}
-          renderItem={RenderItemSearchMovieOrSerie}
+          renderItem={({ item }) => (
+            <RenderItemSearchMovieOrSerie
+              handleNavigationGenericMovies={
+                handleNavigationGenericMovies
+              }
+              item={item}
+            />
+          )}
         />
       </View>
     )
@@ -194,9 +215,8 @@ export default function HomeScreen() {
     handleOnChangeTextSearchMoviesSeries,
     isLoadingSearchMovies,
     isLoadingSearchSeries,
+    handleNavigationGenericMovies,
   } = useHomeViewModel()
-
-  console.log(dataGenericMoviesSeries)
 
   return (
     <Styles.container>
@@ -248,6 +268,9 @@ export default function HomeScreen() {
             genericMovieSeries={dataGenericMoviesSeries}
             isLoadingMovies={isLoadingSearchMovies}
             isLoadingSeries={isLoadingSearchSeries}
+            handleNavigationGenericMovies={
+              handleNavigationGenericMovies
+            }
             titleMoviesOrSeries={typeSearchApi.typeSearchApi}>
             <>
               <SectionList

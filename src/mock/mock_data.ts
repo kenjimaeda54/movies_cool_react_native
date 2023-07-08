@@ -1,3 +1,5 @@
+import { GenericMovieSeriesModel } from '@/models/generic_movie_series_model'
+
 export const mockSeries = {
   page: 1,
   results: [
@@ -128,3 +130,19 @@ export const mockMovies = {
   total_pages: 38944,
   total_results: 778866,
 }
+
+export const mockGenericMoviesOrSeries: GenericMovieSeriesModel[] = [
+  {
+    title: 'Fast X',
+    id: 3234,
+    photo: '/nGxUxi3PfXDRm7Vg95VBNgNM8yc.jpg',
+    overview:
+      'Miles Morales retorna para o próximo capítulo da saga do Aranhaverso, uma aventura épica que transportará o Homem-Aranha em tempo integral e amigável do bairro do Brooklyn através do Multiverso para unir forças com Gwen Stacy e uma nova equipe de Homens-Aranha para enfrentar com um vilão mais poderoso do que qualquer coisa que eles já encontraram.',
+  },
+  {
+    title: 'Slow',
+    id: 323324,
+    photo: '/nGxUxi3PfXDRm7Vg95VBNgNM8yc.jpg',
+    overview: 'Slow mock',
+  },
+]

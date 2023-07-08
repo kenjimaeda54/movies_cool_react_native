@@ -3,7 +3,7 @@ import { MoviesModel } from '@/models/movies_model'
 import { SeriesModel } from '@/models/series_model'
 import { useQuery } from '@tanstack/react-query'
 import { Contants } from '@/utils/contants'
-import { useRef, useState } from 'react'
+import { MutableRefObject, useRef, useState } from 'react'
 
 export async function fetchSearchSeries(word: string) {
   const response = await api.get(
@@ -17,6 +17,9 @@ interface IUseSearchSeries {
   data: SeriesModel
   isLoading: boolean
   refetch: () => void
+  word: MutableRefObject<string>
+  isSuccess: boolean
+  fetchSearchSeries: (word: string) => Promise<SeriesModel>
 }
 
 export default function useSearchSeriesClient(): IUseSearchSeries {
@@ -28,6 +31,7 @@ export default function useSearchSeriesClient(): IUseSearchSeries {
     data = {} as SeriesModel,
     isLoading,
     refetch,
+    isSuccess,
   } = useQuery([Contants.keyReactQuerySearchSerie], () =>
     fetchSearchSeries(word.current)
   )
@@ -37,5 +41,8 @@ export default function useSearchSeriesClient(): IUseSearchSeries {
     setNewWord,
     isLoading,
     refetch,
+    word,
+    isSuccess,
+    fetchSearchSeries,
   }
 }

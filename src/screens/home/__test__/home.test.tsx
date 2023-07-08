@@ -22,6 +22,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from '@/services/query_client'
 import { GenericMovieSeriesModel } from '@/models/generic_movie_series_model'
 import { returnOverview } from '@/utils/return_overview_utils'
+import { mockGenericMoviesOrSeries } from '@/mock/mock_data'
 
 describe('HomeScreen', () => {
   afterEach(cleanup)
@@ -148,19 +149,86 @@ describe('HomeScreen', () => {
   })
 
   //temos uma condicional para verificar
-  it('should view occupy all available space', () => {
+  it('should view exist if conditionnal is true', () => {
     const mockReturnCapitalize = jest.fn()
     const { getByTestId } = render(
       <RenderSectionOrList
+        isLoadingMovies={false}
+        isLoadingSeries={false}
         conditional={true}
         returnCapitalize={mockReturnCapitalize}
         titleMoviesOrSeries={''}
-        genericMovieSeries={[]}>
+        genericMovieSeries={[]}
+        handleNavigationGenericMovies={() => {}}>
         <Text>children</Text>
       </RenderSectionOrList>
     )
     const view = getByTestId(
       Contants.testIdViewContainerRenderItemSearchOrMovie
+    )
+    expect(view).toBeDefined()
+  })
+
+  it('should call handleNavigationGenericMovies when pressing the RenderSectionOrList component button', () => {
+    const mockHandleNavigation = jest.fn()
+    const { getByTestId } = render(
+      <RenderItemSearchMovieOrSerie
+        item={itemGenerics}
+        handleNavigationGenericMovies={mockHandleNavigation}
+      />
+    )
+
+    const button = getByTestId(Contants.testIdItemSearchSeriesOrMovie)
+
+    fireEvent.press(button)
+    expect(mockHandleNavigation).toBeCalledTimes(1)
+  })
+
+  it('should render RenderItemSearchMovieOrSerie when data is not empty', () => {
+    const mockReturnCapitalize = jest.fn()
+    const renderItemMock = jest.fn()
+    const { getByTestId } = render(
+      <RenderSectionOrList
+        isLoadingMovies={false}
+        isLoadingSeries={false}
+        conditional={true}
+        returnCapitalize={mockReturnCapitalize}
+        titleMoviesOrSeries={''}
+        handleNavigationGenericMovies={() => {}}
+        genericMovieSeries={mockGenericMoviesOrSeries}>
+        <Text>children</Text>
+      </RenderSectionOrList>
+    )
+    const list = getByTestId(
+      Contants.testIdListGenericsMoviesAndSeries
+    )
+
+    //precisava testar o RenderItemSearchaMovieOrSerire
+    //então mockei a função do flatslhist que e o renderItem
+    //com esse mock garanto que o componente sera chamado com as props correta
+    renderItemMock(
+      list.props.renderItem({ item: itemGenerics }).props.item
+    )
+
+    expect(renderItemMock).toHaveBeenCalledWith(itemGenerics)
+  })
+
+  it('should render loading if isLoadingMovies ou isLoadingSeries is true', () => {
+    const mockReturnCapitalize = jest.fn()
+    const { getByTestId } = render(
+      <RenderSectionOrList
+        isLoadingMovies={true}
+        isLoadingSeries={false}
+        conditional={true}
+        returnCapitalize={mockReturnCapitalize}
+        titleMoviesOrSeries={''}
+        handleNavigationGenericMovies={() => {}}
+        genericMovieSeries={[]}>
+        <Text>children</Text>
+      </RenderSectionOrList>
+    )
+    const view = getByTestId(
+      Contants.testIdLoadingIndicatorComponentListSearch
     )
     expect(view).toBeDefined()
   })
@@ -241,7 +309,10 @@ describe('HomeScreen', () => {
 
   it('should render the search item  image and title correctly', () => {
     const { getByTestId, getByText } = render(
-      <RenderItemSearchMovieOrSerie item={itemGenerics} />
+      <RenderItemSearchMovieOrSerie
+        item={itemGenerics}
+        handleNavigationGenericMovies={() => {}}
+      />
     )
     const imageId = getByTestId(
       Contants.testIdImageItemSearchSeriesOrMovie
@@ -256,7 +327,12 @@ describe('HomeScreen', () => {
     const mockOverview = jest.fn()
     const overView =
       'Depois de escapar da morte por um triz, o mercenário Tyler Rake encara mais uma missão perigosa: resgatar a família de um criminoso implacável.'
-    render(<RenderItemSearchMovieOrSerie item={itemGenerics} />)
+    render(
+      <RenderItemSearchMovieOrSerie
+        item={itemGenerics}
+        handleNavigationGenericMovies={() => {}}
+      />
+    )
     mockOverview.mockReturnValueOnce(returnOverview(overView))
 
     expect(mockOverview()).toBe(
@@ -267,7 +343,12 @@ describe('HomeScreen', () => {
   it('should return a standard message if it does not have an overview component RenderItemSearchMovieOrSerie', () => {
     const mockOverview = jest.fn()
     const overView = ''
-    render(<RenderItemSearchMovieOrSerie item={itemGenerics} />)
+    render(
+      <RenderItemSearchMovieOrSerie
+        item={itemGenerics}
+        handleNavigationGenericMovies={() => {}}
+      />
+    )
     mockOverview.mockReturnValueOnce(returnOverview(overView))
 
     expect(mockOverview()).toBe(
@@ -275,7 +356,7 @@ describe('HomeScreen', () => {
     )
   })
 
-  it('should called with itens correct when press handleNavigationMovies', () => {
+  it('should call handleNavigationMovies when pressing the RenderItemMovies component button', () => {
     const mockHandleNavigation = jest.fn()
     const { getByTestId } = render(
       <RenderItemMovies
@@ -290,7 +371,7 @@ describe('HomeScreen', () => {
     expect(mockHandleNavigation).toBeCalledTimes(1) //maneira de testar se o botão esta sendo chamado
   })
 
-  it('should called with itens correct when press handleNavigationSeries', () => {
+  it('should call handleNavigationSeries when pressing the RenderItemSeries component button', () => {
     const mockHandleNavigation = jest.fn()
     const { getByTestId } = render(
       <RenderItemSeries

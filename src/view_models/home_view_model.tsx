@@ -37,6 +37,10 @@ export interface IHomeViewModel extends Omit<Clients, OmitValues> {
   setTypeSearchApi: (value: ISearchMoviesSeries) => void
   isLoadingSearchMovies: boolean
   isLoadingSearchSeries: boolean
+  handleNavigationGenericMovies: (
+    item: GenericMovieSeriesModel,
+    title: string
+  ) => void
 }
 
 export interface ISearchMoviesSeries {
@@ -122,6 +126,18 @@ export default function useHomeViewModel(): IHomeViewModel {
     title: string
   ) => navigate('details', { item, title })
 
+  function handleNavigationGenericMovies(
+    item: GenericMovieSeriesModel,
+    title: string
+  ) {
+    const itemSeries = {
+      backdrop_path: item.photo,
+      overview: item.overview,
+    } as SeriesResults
+
+    navigate('details', { item: itemSeries, title })
+  }
+
   const handleHeightInput = (height: number) =>
     setInputHeight(height + 7)
 
@@ -133,6 +149,7 @@ export default function useHomeViewModel(): IHomeViewModel {
         title: it.original_title,
         overview: it.overview,
         photo: it.backdrop_path,
+        id: it.id,
       } as GenericMovieSeriesModel
     })
   }
@@ -189,5 +206,6 @@ export default function useHomeViewModel(): IHomeViewModel {
     setTypeSearchApi,
     isLoadingSearchMovies,
     isLoadingSearchSeries,
+    handleNavigationGenericMovies,
   }
 }

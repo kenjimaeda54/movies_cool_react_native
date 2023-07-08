@@ -6,7 +6,7 @@ import {
   RouteProp,
   useRoute,
 } from '@react-navigation/native'
-import {  View } from 'react-native'
+import { View } from 'react-native'
 import * as Styles from './details.styles'
 import { Contants } from '@/utils/contants'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -14,13 +14,12 @@ import Evillcons from 'react-native-vector-icons/EvilIcons'
 import FastImage from 'react-native-fast-image'
 import useDetailsViewModel from '@/view_models/details_view_model'
 import { returnOverview } from '@/utils/return_overview_utils'
+import { SharedElement } from 'react-navigation-shared-element'
 
 export type IParamList = {
   item: MoviesResults | SeriesResults
   title: string
 }
-
-
 
 const DetailsScreen = () => {
   const route = useRoute()
@@ -51,12 +50,12 @@ const DetailsScreen = () => {
         />
       </Styles.buttonBack>
       <Styles.body>
-        <View>
-          <Styles.title>{title}</Styles.title>
-          <Styles.overView>
-            {returnOverview(item.overview)}
-          </Styles.overView>
-        </View>
+          <View>
+            <Styles.title>{title}</Styles.title>
+            <Styles.overView>
+              {returnOverview(item.overview)}
+            </Styles.overView>
+          </View>
         <Styles.viewQuantityLike>
           <Evillcons name='like' size={30} color={color.grayLight} />
           <Styles.quantityLike>
