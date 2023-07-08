@@ -3,6 +3,9 @@ Com este aplicativo a pessoa pode consultar filmes e series, na tela inicial pos
 Na tela de detalhes consegue visualizar a quantidade de likes,overview e titulo
 API  usado foi essa [ The Movies DB]{(https://developer.themoviedb.org/reference/intro/getting-started)
 
+
+
+![test](teste project.png)
 ## Feature
 - Trabalhei com testes para reforçar uma deficiência minha, precisei usar [msw](https://mswjs.io/docs/) para mocar minhas requisições e [render hooks](https://react-hooks-testing-library.com/reference/api) para lidar com meus hooks customizados
 - Usei bastante hooks customizados, pois arquitetura foi MVVM, então havia camadas de useViewModel e para requisições camadas de useClient
