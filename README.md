@@ -1,7 +1,7 @@
 # Filmes e Series
 Com este aplicativo a pessoa pode consultar filmes e series, na tela inicial possui uma lista fornecida aleatoriamente, porém é possível pesquisar por qualquer um que deseja</br>
 Na tela de detalhes consegue visualizar a quantidade de likes,overview e titulo
-API  usado foi essa [ The Movies DB]{(https://developer.themoviedb.org/reference/intro/getting-started)
+API  usado foi essa [ The Movies DB](https://developer.themoviedb.org/reference/intro/getting-started)
 
 
 
