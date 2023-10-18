@@ -492,7 +492,7 @@ export const input = styled.TextInput<IVieOffeset>`
 ```
 
 ## Publicação
-[Linkedin)(https://www.linkedin.com/posts/kenjimaeda1233_teste-testedesoftware-reactnative-activity-7083529699112476672-pbC8?utm_source=share&utm_medium=member_desktop)
+[Linkedin](https://www.linkedin.com/posts/kenjimaeda1233_teste-testedesoftware-reactnative-activity-7083529699112476672-pbC8?utm_source=share&utm_medium=member_desktop)
 
 
   
